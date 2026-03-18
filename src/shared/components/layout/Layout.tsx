@@ -1,0 +1,23 @@
+import { Outlet } from 'react-router';
+import { Header } from './Header';
+import { Footer } from './Footer';
+
+export function Layout() {
+  return (
+    <div className="min-h-screen bg-[#020618] flex flex-col relative">
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        <div className="absolute top-[20%] right-[15%] w-[600px] h-[600px] bg-[#9d4edd] rounded-full blur-[200px] opacity-30" />
+        <div className="absolute bottom-[20%] left-[10%] w-[500px] h-[500px] bg-[#7b2cbf] rounded-full blur-[180px] opacity-25" />
+        <div className="absolute top-[50%] left-[50%] w-[400px] h-[400px] bg-[#5a189a] rounded-full blur-[150px] opacity-20" />
+      </div>
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-1">
+          <Outlet />
+        </main>
+        <Footer />
+      </div>
+    </div>
+  );
+}
