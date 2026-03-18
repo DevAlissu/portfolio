@@ -1,5 +1,7 @@
 import { useFileExplorer } from './hooks/useFileExplorer';
 import { FileExplorer } from './components/FileExplorer';
+import { TabItem } from './components/TabItem';
+import { TabContent } from './components/TabContent';
 import { ABOUT_CONTENT } from './constants';
 
 export function AboutPage() {
@@ -7,9 +9,11 @@ export function AboutPage() {
     expandedSections,
     expandedSubSections,
     activeTab,
+    openTabs,
     toggleSection,
     toggleSubSection,
     selectTab,
+    closeTab,
   } = useFileExplorer();
 
   const content = ABOUT_CONTENT[activeTab];
@@ -35,43 +39,25 @@ export function AboutPage() {
         <FileExplorer {...explorerProps} />
       </div>
 
-      <main className="flex-1 overflow-auto">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-8 lg:py-12">
-          <div key={activeTab} className="max-w-3xl animate-tab-fade-in">
-            <div className="font-['Fira_Code',sans-serif] text-sm sm:text-base">
-              {content.format === 'comment' && (
-                <div className="space-y-6">
-                  <div className="space-y-4">
-                    <h3 className="text-[#f8fafc] text-lg">/**</h3>
-                    {content.lines.map((line, i) => (
-                      <p key={i} className="text-[#90a1b9] leading-relaxed">
-                        {line}
-                      </p>
-                    ))}
-                    <h3 className="text-[#f8fafc] text-lg">*/</h3>
-                  </div>
-                </div>
-              )}
-              {content.format === 'list' && (
-                <div className="space-y-4">
-                  <p className="text-[#90a1b9] leading-relaxed">{content.title}</p>
-                  <ul className="space-y-2 text-[#90a1b9]">
-                    {content.lines.map((line, i) => (
-                      <li key={i}>{`\u2022 ${line}`}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {content.format === 'text' && (
-                <div className="space-y-4">
-                  <p className="text-[#90a1b9] leading-relaxed">{content.title}</p>
-                  {content.lines.map((line, i) => (
-                    <p key={i} className="text-[#90a1b9] leading-relaxed">
-                      {line}
-                    </p>
-                  ))}
-                </div>
-              )}
+      <main className="flex-1 overflow-auto flex flex-col">
+        {/* Desktop tab bar */}
+        <div className="hidden lg:flex border-b border-[#314158] bg-[#020618] overflow-x-auto">
+          {openTabs.map((tab) => (
+            <TabItem
+              key={tab}
+              tab={tab}
+              isActive={activeTab === tab}
+              canClose={openTabs.length > 1}
+              onSelect={selectTab}
+              onClose={closeTab}
+            />
+          ))}
+        </div>
+
+        <div className="flex-1">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-8 lg:py-12">
+            <div key={activeTab} className="max-w-3xl animate-tab-fade-in">
+              <TabContent content={content} />
             </div>
           </div>
         </div>
