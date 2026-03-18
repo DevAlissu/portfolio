@@ -16,15 +16,7 @@ export function ContactPage() {
 
   return (
     <div className="min-h-[calc(100vh-120px)] flex flex-col lg:flex-row">
-      {/* Desktop sidebar */}
-      <div className="hidden lg:block">
-        <ContactSidebar />
-      </div>
-
-      {/* Mobile inline sidebar */}
-      <div className="lg:hidden">
-        <ContactSidebar />
-      </div>
+      <ContactSidebar />
 
       <main className="flex-1 flex flex-col lg:flex-row">
         <div className="w-full lg:w-[clamp(400px,45vw,632px)] lg:border-r border-[#314158] flex items-center justify-center px-6 sm:px-10 py-10 lg:py-32">
