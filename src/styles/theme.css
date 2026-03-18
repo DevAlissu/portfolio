@@ -1,0 +1,36 @@
+:root {
+  --font-size: 16px;
+}
+
+@layer base {
+  html {
+    font-size: var(--font-size);
+  }
+
+  body {
+    @apply bg-[#020618] text-[#f8fafc];
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #314158 transparent;
+  }
+
+  *::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: #314158;
+    border-radius: 3px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: #43536b;
+  }
+}
