@@ -151,19 +151,19 @@ Cada feature e um ecossistema isolado com seus proprios `components/`, `hooks/`,
 
 ```bash
 # instalar dependencias
-pnpm install
+npm install
 
 # desenvolvimento
-pnpm dev
+npm run dev
 
 # build de producao
-pnpm build
+npm run build
 
 # preview do build
-pnpm preview
+npm run preview
 ```
 
-Requisitos: Node.js 20+, pnpm
+Requisitos: Node.js 20+
 
 <br />
 
@@ -171,7 +171,7 @@ Requisitos: Node.js 20+, pnpm
 
 O projeto roda em uma VM Oracle Cloud com Caddy como servidor web (HTTPS automatico via Let's Encrypt).
 
-O CI/CD esta configurado no GitHub Actions: a cada push na `main`, o workflow faz build com pnpm, envia os arquivos via SCP para o servidor e recarrega o Caddy.
+O CI/CD esta configurado no GitHub Actions: a cada push na `main`, o workflow faz build com npm, envia os arquivos via SCP para o servidor e recarrega o Caddy.
 
 <br />
 
