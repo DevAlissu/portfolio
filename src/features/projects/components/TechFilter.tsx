@@ -6,11 +6,13 @@ import { TECH_ICONS } from '../constants/tech-icons';
 interface TechFilterProps {
   selectedTech: string[];
   onToggle: (tech: string) => void;
+  mobile?: boolean;
 }
 
-export function TechFilter({ selectedTech, onToggle }: TechFilterProps) {
-  const [expandedCats, setExpandedCats] = useState<string[]>(['frontend']);
-  const [expandedSubs, setExpandedSubs] = useState<string[]>(['frameworks']);
+export function TechFilter({ selectedTech, onToggle, mobile }: TechFilterProps) {
+  const [expandedCats, setExpandedCats] = useState<string[]>(mobile ? [] : ['frontend']);
+  const [expandedSubs, setExpandedSubs] = useState<string[]>(mobile ? [] : ['frameworks']);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   const toggleCat = (label: string) => {
     setExpandedCats((prev) =>
@@ -24,6 +26,103 @@ export function TechFilter({ selectedTech, onToggle }: TechFilterProps) {
     );
   };
 
+  const filterContent = (
+    <div className="px-4 pb-4 space-y-0.5">
+      {TECH_CATEGORIES.map((cat) => {
+        const isCatOpen = expandedCats.includes(cat.label);
+        return (
+          <div key={cat.label}>
+            <button
+              onClick={() => toggleCat(cat.label)}
+              className="flex items-center gap-2 w-full text-left py-1.5 text-[#f8fafc] hover:text-[#43D9AD] transition-colors font-['Fira_Code',sans-serif] text-sm"
+            >
+              {isCatOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
+              <Folder size={14} style={{ color: cat.iconColor }} />
+              <span>{cat.label}</span>
+            </button>
+
+            {isCatOpen && (
+              <div className="ml-5 space-y-0.5 mt-0.5">
+                {cat.subCategories.map((sub) => {
+                  const isSubOpen = expandedSubs.includes(sub.label);
+                  const isSingleGroup = sub.label === 'all';
+
+                  if (isSingleGroup) {
+                    return (
+                      <div key={sub.label} className="space-y-0.5">
+                        {sub.techs.map((tech) => (
+                          <TechCheckbox
+                            key={tech}
+                            tech={tech}
+                            checked={selectedTech.includes(tech)}
+                            onToggle={onToggle}
+                          />
+                        ))}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <div key={sub.label}>
+                      <button
+                        onClick={() => toggleSub(sub.label)}
+                        className="flex items-center gap-2 w-full text-left py-1 text-[#90a1b9] hover:text-[#f8fafc] transition-colors font-['Fira_Code',sans-serif] text-xs"
+                      >
+                        {isSubOpen ? (
+                          <ChevronDown size={12} />
+                        ) : (
+                          <ChevronRight size={12} />
+                        )}
+                        <Folder size={12} style={{ color: sub.iconColor }} />
+                        <span>{sub.label}</span>
+                      </button>
+
+                      {isSubOpen && (
+                        <div className="ml-5 space-y-0.5 mt-0.5">
+                          {sub.techs.map((tech) => (
+                            <TechCheckbox
+                              key={tech}
+                              tech={tech}
+                              checked={selectedTech.includes(tech)}
+                              onToggle={onToggle}
+                            />
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  );
+
+  // Mobile: inline collapsible filter
+  if (mobile) {
+    return (
+      <div className="lg:hidden border-b border-[#314158] bg-[#020618]">
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="w-full px-6 py-3 flex items-center gap-3 hover:bg-[#1d293d]/20 transition-colors"
+        >
+          <div className="w-4 h-4">
+            <svg viewBox="0 0 8 4" className={`w-full h-full transition-transform ${mobileOpen ? '' : '-rotate-90'}`}>
+              <path d="M4 4L0 0H8L4 4Z" fill="#F8FAFC" />
+            </svg>
+          </div>
+          <span className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-[16px]">
+            projetos
+          </span>
+        </button>
+        {mobileOpen && filterContent}
+      </div>
+    );
+  }
+
+  // Desktop: sidebar
   return (
     <aside className="hidden lg:block w-[clamp(200px,18vw,311px)] border-r border-[#314158] shrink-0 overflow-y-auto max-h-[calc(100vh-120px)]">
       <div className="border-b border-[#314158]">
@@ -37,79 +136,7 @@ export function TechFilter({ selectedTech, onToggle }: TechFilterProps) {
             projetos
           </span>
         </div>
-
-        <div className="px-4 pb-4 space-y-0.5">
-          {TECH_CATEGORIES.map((cat) => {
-            const isCatOpen = expandedCats.includes(cat.label);
-            return (
-              <div key={cat.label}>
-                {/* Category folder */}
-                <button
-                  onClick={() => toggleCat(cat.label)}
-                  className="flex items-center gap-2 w-full text-left py-1.5 text-[#f8fafc] hover:text-[#43D9AD] transition-colors font-['Fira_Code',sans-serif] text-sm"
-                >
-                  {isCatOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
-                  <Folder size={14} style={{ color: cat.iconColor }} />
-                  <span>{cat.label}</span>
-                </button>
-
-                {isCatOpen && (
-                  <div className="ml-5 space-y-0.5 mt-0.5">
-                    {cat.subCategories.map((sub) => {
-                      const isSubOpen = expandedSubs.includes(sub.label);
-                      const isSingleGroup = sub.label === 'all';
-
-                      if (isSingleGroup) {
-                        return (
-                          <div key={sub.label} className="space-y-0.5">
-                            {sub.techs.map((tech) => (
-                              <TechCheckbox
-                                key={tech}
-                                tech={tech}
-                                checked={selectedTech.includes(tech)}
-                                onToggle={onToggle}
-                              />
-                            ))}
-                          </div>
-                        );
-                      }
-
-                      return (
-                        <div key={sub.label}>
-                          <button
-                            onClick={() => toggleSub(sub.label)}
-                            className="flex items-center gap-2 w-full text-left py-1 text-[#90a1b9] hover:text-[#f8fafc] transition-colors font-['Fira_Code',sans-serif] text-xs"
-                          >
-                            {isSubOpen ? (
-                              <ChevronDown size={12} />
-                            ) : (
-                              <ChevronRight size={12} />
-                            )}
-                            <Folder size={12} style={{ color: sub.iconColor }} />
-                            <span>{sub.label}</span>
-                          </button>
-
-                          {isSubOpen && (
-                            <div className="ml-5 space-y-0.5 mt-0.5">
-                              {sub.techs.map((tech) => (
-                                <TechCheckbox
-                                  key={tech}
-                                  tech={tech}
-                                  checked={selectedTech.includes(tech)}
-                                  onToggle={onToggle}
-                                />
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+        {filterContent}
       </div>
     </aside>
   );

@@ -1,4 +1,3 @@
-import { Menu } from 'lucide-react';
 import { useFileExplorer } from './hooks/useFileExplorer';
 import { FileExplorer } from './components/FileExplorer';
 import { ABOUT_CONTENT } from './constants';
@@ -8,12 +7,9 @@ export function AboutPage() {
     expandedSections,
     expandedSubSections,
     activeTab,
-    mobileSidebarOpen,
     toggleSection,
     toggleSubSection,
     selectTab,
-    toggleMobileSidebar,
-    closeMobileSidebar,
   } = useFileExplorer();
 
   const content = ABOUT_CONTENT[activeTab];
@@ -28,22 +24,20 @@ export function AboutPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-120px)] flex">
+    <div className="min-h-[calc(100vh-120px)] flex flex-col lg:flex-row">
+      {/* Desktop sidebar */}
       <aside className="hidden lg:block w-[clamp(220px,20vw,320px)] border-r border-[#314158] bg-[#020618]">
         <FileExplorer {...explorerProps} />
       </aside>
 
-      <aside
-        className={`lg:hidden fixed top-0 left-0 h-full w-80 bg-[#020618] border-r border-[#314158] transition-transform z-50 ${
-          mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
+      {/* Mobile inline accordion */}
+      <div className="lg:hidden border-b border-[#314158] bg-[#020618]">
         <FileExplorer {...explorerProps} />
-      </aside>
+      </div>
 
       <main className="flex-1 overflow-auto">
         <div className="container mx-auto px-4 sm:px-6 lg:px-12 py-8 lg:py-12">
-          <div className="max-w-3xl">
+          <div key={activeTab} className="max-w-3xl animate-tab-fade-in">
             <div className="font-['Fira_Code',sans-serif] text-sm sm:text-base">
               {content.format === 'comment' && (
                 <div className="space-y-6">
@@ -82,20 +76,6 @@ export function AboutPage() {
           </div>
         </div>
       </main>
-
-      <button
-        onClick={toggleMobileSidebar}
-        className="lg:hidden fixed top-4 left-4 z-50 bg-[#020618] text-[#f8fafc] p-2 rounded-full shadow-lg"
-      >
-        <Menu size={24} />
-      </button>
-
-      {mobileSidebarOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-black/50 z-40"
-          onClick={closeMobileSidebar}
-        />
-      )}
     </div>
   );
 }

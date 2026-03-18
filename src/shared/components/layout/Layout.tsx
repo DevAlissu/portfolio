@@ -1,8 +1,10 @@
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { Header } from './Header';
 import { Footer } from './Footer';
 
 export function Layout() {
+  const location = useLocation();
+
   return (
     <div className="min-h-screen bg-[#020618] flex flex-col relative">
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -13,7 +15,7 @@ export function Layout() {
 
       <div className="relative z-10 flex flex-col min-h-screen">
         <Header />
-        <main className="flex-1">
+        <main key={location.pathname} className="flex-1 animate-tab-fade-in">
           <Outlet />
         </main>
         <Footer />

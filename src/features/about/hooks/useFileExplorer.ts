@@ -5,7 +5,6 @@ export function useFileExplorer() {
   const [expandedSections, setExpandedSections] = useState<AboutSection[]>(['personal-info']);
   const [expandedSubSections, setExpandedSubSections] = useState<string[]>(['education']);
   const [activeTab, setActiveTab] = useState<AboutTab>('bio');
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   const toggleSection = (section: AboutSection) => {
     setExpandedSections((prev) =>
@@ -21,21 +20,14 @@ export function useFileExplorer() {
 
   const selectTab = (tab: AboutTab) => {
     setActiveTab(tab);
-    setMobileSidebarOpen(false);
   };
-
-  const toggleMobileSidebar = () => setMobileSidebarOpen((prev) => !prev);
-  const closeMobileSidebar = () => setMobileSidebarOpen(false);
 
   return {
     expandedSections,
     expandedSubSections,
     activeTab,
-    mobileSidebarOpen,
     toggleSection,
     toggleSubSection,
     selectTab,
-    toggleMobileSidebar,
-    closeMobileSidebar,
   };
 }

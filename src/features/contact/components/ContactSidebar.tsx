@@ -6,18 +6,18 @@ const PHONE_ICON = 'M12.4 14C10.88 14 9.36 13.54 7.96 12.62C6.56 11.7 5.3 10.44 
 const SOCIAL_ICON = 'M11.3333 3.33333C11.3333 3.33333 11.2 2.4 10.8 2C10.2667 1.46667 9.66667 1.46667 9.4 1.43333C7.86667 1.33333 6 1.33333 6 1.33333C6 1.33333 4.13333 1.33333 2.6 1.43333C2.33333 1.46667 1.73333 1.46667 1.2 2C0.8 2.4 0.666667 3.33333 0.666667 3.33333C0.666667 3.33333 0.533333 4.4 0.533333 5.46667V6.53333C0.533333 7.6 0.666667 8.66667 0.666667 8.66667C0.666667 8.66667 0.8 9.6 1.2 10C1.73333 10.5333 2.4 10.5333 2.66667 10.6C3.73333 10.6667 6 10.6667 6 10.6667C6 10.6667 7.86667 10.6667 9.4 10.5667C9.66667 10.5333 10.2667 10.5333 10.8 10C11.2 9.6 11.3333 8.66667 11.3333 8.66667C11.3333 8.66667 11.4667 7.6 11.4667 6.53333V5.46667C11.4667 4.4 11.3333 3.33333 11.3333 3.33333ZM4.8 7.6V4.13333L7.73333 5.86667L4.8 7.6Z';
 
 export function ContactSidebar() {
-  const [expandedContacts, setExpandedContacts] = useState(true);
-  const [expandedSocial, setExpandedSocial] = useState(true);
+  const [expandedContacts, setExpandedContacts] = useState(false);
+  const [expandedSocial, setExpandedSocial] = useState(false);
 
   return (
-    <aside className="w-[clamp(200px,20vw,311px)] border-r border-[#314158] shrink-0">
+    <aside className="w-full lg:w-[clamp(200px,20vw,311px)] lg:border-r border-[#314158] shrink-0">
       <div className="border-b border-[#314158]">
         <button
           onClick={() => setExpandedContacts(!expandedContacts)}
           className="w-full px-6 py-3 flex items-center gap-3 hover:bg-[#1d293d]/20 transition-colors"
         >
           <div className="w-4 h-4">
-            <svg viewBox="0 0 8 4" className="w-full h-full">
+            <svg viewBox="0 0 8 4" className={`w-full h-full transition-transform ${expandedContacts ? '' : '-rotate-90'}`}>
               <path d="M4 4L0 0H8L4 4Z" fill="#F8FAFC" />
             </svg>
           </div>
@@ -44,7 +44,7 @@ export function ContactSidebar() {
           className="w-full px-6 py-3 flex items-center gap-3 hover:bg-[#1d293d]/20 transition-colors"
         >
           <div className="w-4 h-4">
-            <svg viewBox="0 0 8 4" className="w-full h-full">
+            <svg viewBox="0 0 8 4" className={`w-full h-full transition-transform ${expandedSocial ? '' : '-rotate-90'}`}>
               <path d="M4 4L0 0H8L4 4Z" fill="#F8FAFC" />
             </svg>
           </div>
