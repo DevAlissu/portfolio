@@ -1,4 +1,4 @@
-import type { AboutTab } from "../types";
+import type { AboutTab, SidebarFolder } from "../types";
 
 interface AboutContentItem {
   title: string;
@@ -192,19 +192,24 @@ export const ABOUT_CONTENT: Record<AboutTab, AboutContentItem> = {
   },
 };
 
-export interface SidebarFile {
-  key: string;
-  label: string;
-  iconColor: string;
-}
-
-export interface SidebarFolder {
-  key: string;
-  label: string;
-  iconColor: string;
-  files?: SidebarFile[];
-  subFolders?: SidebarFolder[];
-}
+export const TAB_LABELS: Record<AboutTab, string> = {
+  bio: "bio",
+  interests: "interesses",
+  "high-school": "ensino-medio",
+  university: "universidade",
+  capacitacoes: "capacitacoes",
+  "xp-uea": "uea-nexus",
+  "xp-inova": "inova-ifam",
+  "xp-ludus": "ludus-lab",
+  "xp-inpa": "inpa",
+  "xp-melo": "melo-distribuidora",
+  "xp-fapeam": "fapeam-pibic",
+  "xp-aranoua": "aranoua",
+  "xp-semed": "semed",
+  "pub-ieee": "green-energy-ieee",
+  "pub-sbie": "gamificacao-sbie",
+  hobbies: "interesses-pessoais",
+};
 
 export const SIDEBAR_SECTIONS: SidebarFolder[] = [
   {

@@ -21,3 +21,17 @@ export type AboutTab =
   | 'pub-ieee'
   | 'pub-sbie'
   | 'hobbies';
+
+export interface SidebarFile {
+  key: string;
+  label: string;
+  iconColor: string;
+}
+
+export interface SidebarFolder {
+  key: string;
+  label: string;
+  iconColor: string;
+  files?: SidebarFile[];
+  subFolders?: SidebarFolder[];
+}
