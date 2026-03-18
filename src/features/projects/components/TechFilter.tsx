@@ -6,12 +6,11 @@ import { TECH_ICONS } from '../constants/tech-icons';
 interface TechFilterProps {
   selectedTech: string[];
   onToggle: (tech: string) => void;
-  mobile?: boolean;
 }
 
-export function TechFilter({ selectedTech, onToggle, mobile }: TechFilterProps) {
-  const [expandedCats, setExpandedCats] = useState<string[]>(mobile ? [] : ['frontend']);
-  const [expandedSubs, setExpandedSubs] = useState<string[]>(mobile ? [] : ['frameworks']);
+export function TechFilter({ selectedTech, onToggle }: TechFilterProps) {
+  const [expandedCats, setExpandedCats] = useState<string[]>(['frontend']);
+  const [expandedSubs, setExpandedSubs] = useState<string[]>(['frameworks']);
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const toggleCat = (label: string) => {
@@ -100,9 +99,9 @@ export function TechFilter({ selectedTech, onToggle, mobile }: TechFilterProps) 
     </div>
   );
 
-  // Mobile: inline collapsible filter
-  if (mobile) {
-    return (
+  return (
+    <>
+      {/* Mobile: inline collapsible */}
       <div className="lg:hidden border-b border-[#314158] bg-[#020618]">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
@@ -119,26 +118,24 @@ export function TechFilter({ selectedTech, onToggle, mobile }: TechFilterProps) 
         </button>
         {mobileOpen && filterContent}
       </div>
-    );
-  }
 
-  // Desktop: sidebar
-  return (
-    <aside className="hidden lg:block w-[clamp(200px,18vw,311px)] border-r border-[#314158] shrink-0 overflow-y-auto max-h-[calc(100vh-120px)]">
-      <div className="border-b border-[#314158]">
-        <div className="w-full px-6 py-3 flex items-center gap-3">
-          <div className="w-4 h-4">
-            <svg viewBox="0 0 8 4" className="w-full h-full">
-              <path d="M4 4L0 0H8L4 4Z" fill="#F8FAFC" />
-            </svg>
+      {/* Desktop: sidebar */}
+      <aside className="hidden lg:block w-[clamp(200px,18vw,311px)] border-r border-[#314158] shrink-0 overflow-y-auto max-h-[calc(100vh-120px)]">
+        <div className="border-b border-[#314158]">
+          <div className="w-full px-6 py-3 flex items-center gap-3">
+            <div className="w-4 h-4">
+              <svg viewBox="0 0 8 4" className="w-full h-full">
+                <path d="M4 4L0 0H8L4 4Z" fill="#F8FAFC" />
+              </svg>
+            </div>
+            <span className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-[16px]">
+              projetos
+            </span>
           </div>
-          <span className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-[16px]">
-            projetos
-          </span>
+          {filterContent}
         </div>
-        {filterContent}
-      </div>
-    </aside>
+      </aside>
+    </>
   );
 }
 

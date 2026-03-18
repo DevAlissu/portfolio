@@ -11,11 +11,7 @@ export function ProjectsPage() {
 
   return (
     <div className="min-h-[calc(100vh-120px)] flex flex-col lg:flex-row">
-      {/* Desktop sidebar */}
       <TechFilter selectedTech={selectedTech} onToggle={toggleTech} />
-
-      {/* Mobile inline filter */}
-      <TechFilter selectedTech={selectedTech} onToggle={toggleTech} mobile />
 
       <main className="flex-1">
         <div className="border-b lg:border-l border-[#314158] px-6 py-3">
