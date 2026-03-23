@@ -1,4 +1,4 @@
-name: Deploy Portfolio
+name: Deploy
 
 on:
   push:
@@ -13,26 +13,8 @@ on:
       - 'index.html'
 
 jobs:
-  validate:
-    name: Validar
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: npm
-
-      - run: npm ci
-
-      - name: Type check
-        run: npx tsc --noEmit
-
-  build-deploy:
+  deploy:
     name: Build e Deploy
-    needs: validate
     runs-on: ubuntu-latest
 
     steps:
@@ -46,6 +28,9 @@ jobs:
           cache: npm
 
       - run: npm ci
+
+      - name: Type check
+        run: npx tsc --noEmit
 
       - name: Build
         run: npm run build
@@ -69,7 +54,7 @@ jobs:
           script: |
             sudo systemctl reload caddy
 
-      - name: Job summary
+      - name: Summary
         run: |
           COMMIT_MSG=$(git log -1 --pretty=format:'%s')
           COMMIT_HASH=$(git log -1 --pretty=format:'%h')
@@ -77,14 +62,12 @@ jobs:
           FILES_CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | wc -l)
           BUNDLE_SIZE=$(du -sh dist/ | cut -f1)
 
-          cat >> $GITHUB_STEP_SUMMARY <<EOF
-          ## Deploy concluido
-
-          | Info | Valor |
-          |------|-------|
-          | Commit | \`${COMMIT_HASH}\` — ${COMMIT_MSG} |
-          | Autor | ${COMMIT_AUTHOR} |
-          | Arquivos alterados | ${FILES_CHANGED} |
-          | Tamanho do bundle | ${BUNDLE_SIZE} |
-          | Destino | \`ubuntu@159.112.183.153:~/portfolio\` |
-          EOF
+          echo "## Deploy concluido" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Info | Valor |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Commit | \`${COMMIT_HASH}\` — ${COMMIT_MSG} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Autor | ${COMMIT_AUTHOR} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Arquivos alterados | ${FILES_CHANGED} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Bundle | \`${BUNDLE_SIZE}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Destino | \`alissu.dev\` |" >> $GITHUB_STEP_SUMMARY
