@@ -12,6 +12,8 @@
   <br />
   <sub>portfolio interativo inspirado em IDE</sub>
 </h1>
+<img width="1920" height="1080" alt="{54AEB088-66BA-4052-A22C-0A2E351D85A2}" src="https://github.com/user-attachments/assets/51a1927b-f929-4c89-805e-74e37c04adf5" />
+
 
 <p align="center">
   Portfolio pessoal com interface inspirada em editores de codigo, um Snake Game com animacao a 60fps renderizado em SVG, galeria de 26 projetos reais com lightbox, e formulario de contato com code preview ao vivo.
