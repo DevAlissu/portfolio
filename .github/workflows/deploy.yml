@@ -3,9 +3,18 @@ name: Deploy Portfolio
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'tsconfig.json'
+      - 'index.html'
 
 jobs:
-  deploy:
+  validate:
+    name: Validar
     runs-on: ubuntu-latest
 
     steps:
@@ -14,10 +23,32 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: npm
 
       - run: npm ci
 
-      - run: npm run build
+      - name: Type check
+        run: npx tsc --noEmit
+
+  build-deploy:
+    name: Build e Deploy
+    needs: validate
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        run: npm run build
 
       - name: Deploy to Oracle VM
         uses: appleboy/scp-action@v0.1.7
@@ -37,3 +68,23 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             sudo systemctl reload caddy
+
+      - name: Job summary
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=format:'%s')
+          COMMIT_HASH=$(git log -1 --pretty=format:'%h')
+          COMMIT_AUTHOR=$(git log -1 --pretty=format:'%an')
+          FILES_CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null | wc -l)
+          BUNDLE_SIZE=$(du -sh dist/ | cut -f1)
+
+          cat >> $GITHUB_STEP_SUMMARY <<EOF
+          ## Deploy concluido
+
+          | Info | Valor |
+          |------|-------|
+          | Commit | \`${COMMIT_HASH}\` — ${COMMIT_MSG} |
+          | Autor | ${COMMIT_AUTHOR} |
+          | Arquivos alterados | ${FILES_CHANGED} |
+          | Tamanho do bundle | ${BUNDLE_SIZE} |
+          | Destino | \`ubuntu@159.112.183.153:~/portfolio\` |
+          EOF
