@@ -120,7 +120,7 @@ export function TechFilter({ selectedTech, onToggle }: TechFilterProps) {
       </div>
 
       {/* Desktop: sidebar */}
-      <aside className="hidden lg:block w-[clamp(200px,18vw,311px)] border-r border-[#314158] shrink-0 overflow-y-auto max-h-[calc(100vh-120px)]">
+      <aside className="hidden lg:block w-[clamp(200px,18vw,311px)] border-r border-[#314158] overflow-y-auto">
         <div className="border-b border-[#314158]">
           <div className="w-full px-6 py-3 flex items-center gap-3">
             <div className="w-4 h-4">

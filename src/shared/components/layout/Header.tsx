@@ -10,10 +10,10 @@ export function Header() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="border-b border-[#314158] bg-[#020618]">
+    <header className="border-b border-[#314158] bg-[#020618] shrink-0">
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <div className="px-6 py-4 border-r border-[#314158]">
+        <div className="flex items-center min-w-0">
+          <div className="px-3 lg:px-6 py-4 border-r border-[#314158]">
             <Link to="/">
               <p className="font-['Fira_Code',sans-serif] font-[450] text-[#90a1b9] text-base whitespace-nowrap">
                 DevAlissu
@@ -26,7 +26,7 @@ export function Header() {
               <Link
                 key={item.path}
                 to={item.path}
-                className={`relative px-4 lg:px-8 py-4 border-r border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-sm lg:text-base transition-colors whitespace-nowrap ${
+                className={`relative px-3 lg:px-6 xl:px-8 py-4 border-r border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-xs lg:text-sm xl:text-base transition-colors whitespace-nowrap ${
                   isActive(item.path)
                     ? 'text-[#f8fafc]'
                     : 'text-[#90a1b9] hover:text-[#f8fafc]'
@@ -44,7 +44,7 @@ export function Header() {
         <div className="hidden md:flex items-center shrink-0">
           <Link
             to={CONTACT_NAV.path}
-            className={`px-4 lg:px-8 py-4 border-l border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-sm lg:text-base transition-colors whitespace-nowrap ${
+            className={`px-3 lg:px-6 xl:px-8 py-4 border-l border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-xs lg:text-sm xl:text-base transition-colors whitespace-nowrap ${
               isActive(CONTACT_NAV.path)
                 ? 'text-[#f8fafc]'
                 : 'text-[#90a1b9] hover:text-[#f8fafc]'

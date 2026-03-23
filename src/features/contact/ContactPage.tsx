@@ -15,10 +15,10 @@ export function ContactPage() {
   });
 
   return (
-    <div className="min-h-[calc(100vh-120px)] flex flex-col lg:flex-row">
+    <div className="h-full flex flex-col lg:flex-row min-w-0">
       <ContactSidebar />
 
-      <main className="flex-1 flex flex-col lg:flex-row">
+      <main className="flex-1 min-w-0 flex flex-col lg:flex-row overflow-auto">
         <div className="w-full lg:w-[clamp(400px,45vw,632px)] lg:border-r border-[#314158] flex items-center justify-center px-6 sm:px-10 py-10 lg:py-32">
           {formStatus === 'success' ? (
             <ContactSuccess onNewMessage={handleNewMessage} />

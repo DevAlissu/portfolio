@@ -28,7 +28,7 @@ export function AboutPage() {
   };
 
   return (
-    <div className="min-h-[calc(100vh-120px)] flex flex-col lg:flex-row">
+    <div className="h-full flex flex-col lg:flex-row min-w-0">
       {/* Desktop sidebar */}
       <aside className="hidden lg:block w-[clamp(220px,20vw,320px)] border-r border-[#314158] bg-[#020618]">
         <FileExplorer {...explorerProps} />
@@ -39,7 +39,7 @@ export function AboutPage() {
         <FileExplorer {...explorerProps} />
       </div>
 
-      <main className="flex-1 overflow-auto flex flex-col">
+      <main className="flex-1 min-w-0 overflow-auto flex flex-col">
         {/* Desktop tab bar */}
         <div className="hidden lg:flex border-b border-[#314158] bg-[#020618] overflow-x-auto">
           {openTabs.map((tab) => (

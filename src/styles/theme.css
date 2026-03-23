@@ -7,6 +7,10 @@
     font-size: var(--font-size);
   }
 
+  html, body, #root {
+    @apply h-full overflow-hidden;
+  }
+
   body {
     @apply bg-[#020618] text-[#f8fafc];
   }

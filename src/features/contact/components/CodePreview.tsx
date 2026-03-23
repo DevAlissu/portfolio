@@ -7,7 +7,7 @@ interface CodePreviewProps {
 
 export function CodePreview({ formData, currentDate }: CodePreviewProps) {
   return (
-    <div className="flex-1 flex gap-10 px-10 py-3">
+    <div className="flex-1 min-w-0 flex gap-4 sm:gap-6 px-4 sm:px-6 lg:px-10 py-3">
       <div className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[18px] leading-[27px] text-right pt-1">
         {Array.from({ length: 12 }, (_, i) => (
           <p key={i} className="mb-0">{i + 1}</p>

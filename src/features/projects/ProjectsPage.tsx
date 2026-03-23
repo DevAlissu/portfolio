@@ -10,10 +10,10 @@ export function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <div className="min-h-[calc(100vh-120px)] flex flex-col lg:flex-row">
+    <div className="h-full flex flex-col lg:flex-row min-w-0">
       <TechFilter selectedTech={selectedTech} onToggle={toggleTech} />
 
-      <main className="flex-1">
+      <main className="flex-1 min-w-0 overflow-auto">
         <div className="border-b lg:border-l border-[#314158] px-6 py-3">
           <div className="flex items-center gap-2 text-[#90a1b9] font-['Fira_Code',sans-serif] text-[14px]">
             {selectedTech.length > 0 ? selectedTech.join('; ') : 'todos'}

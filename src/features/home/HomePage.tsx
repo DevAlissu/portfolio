@@ -2,7 +2,7 @@ import { SnakeGame } from '../snake-game';
 
 export function HomePage() {
   return (
-    <div className="min-h-[calc(100vh-120px)] relative overflow-hidden">
+    <div className="h-full relative overflow-hidden">
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div className="space-y-8 lg:space-y-12">

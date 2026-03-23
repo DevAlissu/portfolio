@@ -28,7 +28,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
 
   return (
     <div
-      className={`backdrop-blur-[32px] content-stretch flex flex-col lg:flex-row gap-4 sm:gap-6 items-start p-4 sm:p-8 relative rounded-lg min-w-0 ${className}`}
+      className={`backdrop-blur-[32px] content-stretch flex flex-col lg:flex-row gap-4 sm:gap-6 items-start p-4 sm:p-6 relative rounded-lg min-w-0 max-w-full ${className}`}
       style={{
         backgroundImage:
           'linear-gradient(152.11deg, rgba(52, 3, 78, 0.7) 1.7049%, rgba(33, 2, 60, 0.09) 81.819%)',
