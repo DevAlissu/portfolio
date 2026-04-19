@@ -13,6 +13,7 @@ export function useSnakeGame() {
   const mode = useGameStore((s) => s.mode);
   const leaderboard = useGameStore((s) => s.leaderboard);
   const combo = useGameStore((s) => s.combo);
+  const lastEatTime = useGameStore((s) => s.lastEatTime);
   const particles = useGameStore((s) => s.particles);
   const shakeKey = useGameStore((s) => s.shakeKey);
   const startGame = useGameStore((s) => s.startGame);
@@ -90,6 +91,7 @@ export function useSnakeGame() {
     mode,
     leaderboard,
     combo,
+    lastEatTime,
     particles,
     shakeKey,
     remainingFood,

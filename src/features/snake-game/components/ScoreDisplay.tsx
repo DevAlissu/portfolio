@@ -1,14 +1,23 @@
 import { memo } from 'react';
-import { FOOD_TO_WIN_CASUAL } from '../constants';
+import { FOOD_TO_WIN_CASUAL, COMBO_WINDOW_MS } from '../constants';
 import type { GameMode } from '../types';
 
 interface ScoreDisplayProps {
   score: number;
   mode: GameMode;
+  combo: number;
+  lastEatTime: number;
 }
 
-export const ScoreDisplay = memo(function ScoreDisplay({ score, mode }: ScoreDisplayProps) {
+export const ScoreDisplay = memo(function ScoreDisplay({
+  score,
+  mode,
+  combo,
+  lastEatTime,
+}: ScoreDisplayProps) {
   if (mode === 'competitive') {
+    const showCombo = combo > 1;
+    const multiplier = Math.min(combo, 5);
     return (
       <div className="w-full">
         <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm mb-1">
@@ -17,6 +26,18 @@ export const ScoreDisplay = memo(function ScoreDisplay({ score, mode }: ScoreDis
         <p className="font-['Fira_Code',sans-serif] text-[#43D9AD] text-2xl font-bold">
           {score}
         </p>
+        <div className="h-8 mt-2">
+          {showCombo && (
+            <div
+              key={lastEatTime}
+              className="snake-combo font-['Fira_Code',sans-serif] text-[#b14eff] text-xs inline-flex items-center gap-1.5"
+              style={{ animationDuration: `${COMBO_WINDOW_MS}ms` }}
+            >
+              <span>combo x{multiplier}</span>
+              <span className="snake-combo-bar" style={{ animationDuration: `${COMBO_WINDOW_MS}ms` }} />
+            </div>
+          )}
+        </div>
       </div>
     );
   }
