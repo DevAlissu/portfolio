@@ -86,8 +86,8 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize, particles, 
   }, [gridSize]);
 
   return (
-    <div ref={containerRef} className="bg-[#1d293d] rounded-lg shadow-[inset_1px_5px_11px_0px_rgba(2,18,27,0.71)] p-3 sm:p-6 w-full">
-      <div className="relative bg-[#0a1628] rounded-sm overflow-hidden w-full max-w-[400px] aspect-square mx-auto">
+    <div ref={containerRef} className="bg-[#1d293d] rounded-lg shadow-[inset_1px_5px_11px_0px_rgba(2,18,27,0.71)] p-3 sm:p-5 w-full" style={{ maxWidth: 'min(440px, calc(50vh + 40px))' }}>
+      <div className="relative bg-[#0a1628] rounded-sm overflow-hidden w-full aspect-square mx-auto" style={{ maxWidth: 'min(400px, 50vh)' }}>
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 400 400"
