@@ -1,0 +1,296 @@
+/* ================================================================
+   Snake Game styles
+   Organized by: tokens > buttons > tabs > arrows > combo > animations
+   ================================================================ */
+
+:root {
+  --sg-font: 'Fira Code', monospace;
+  --sg-radius: 0.5rem;
+  --sg-radius-sm: 0.375rem;
+  --sg-transition: 150ms ease-out;
+  --sg-transition-slow: 180ms ease-out;
+  --sg-transition-fast: 120ms ease-out;
+
+  --sg-color-text: #f8fafc;
+  --sg-color-muted: #90a1b9;
+  --sg-color-border: #314158;
+  --sg-color-dark: #020618;
+
+  --sg-green-light: #7eedcf;
+  --sg-green: #43d9ad;
+  --sg-green-deep: #2eb38e;
+  --sg-purple-light: #c490f7;
+  --sg-purple: #9d4edd;
+  --sg-purple-deep: #7c3aed;
+  --sg-purple-glow: rgba(157, 78, 221, 0.5);
+  --sg-pink: #b14eff;
+}
+
+/* ----------------------------------------------------------------
+   Base button (snake-btn)
+   Shared spec for primary / success / ghost variants.
+   ---------------------------------------------------------------- */
+.snake-btn {
+  font-family: var(--sg-font);
+  font-weight: 500;
+  font-size: 0.875rem;
+  letter-spacing: 0.02em;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: var(--sg-radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    transform var(--sg-transition-fast),
+    box-shadow var(--sg-transition-slow),
+    background var(--sg-transition-slow),
+    border-color var(--sg-transition-slow);
+}
+
+.snake-btn::before {
+  content: '>';
+  font-weight: 600;
+  opacity: 0.7;
+  transition: transform var(--sg-transition-slow), opacity var(--sg-transition-slow);
+}
+
+.snake-btn:hover::before { transform: translateX(2px); opacity: 1; }
+.snake-btn:active { transform: translateY(1px); }
+.snake-btn:focus-visible { outline: 2px solid var(--sg-color-text); outline-offset: 3px; }
+.snake-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+.snake-btn-compact { padding: 0.4rem 0.9rem; font-size: 0.75rem; }
+
+/* variant: primary (purple) */
+.snake-btn-primary {
+  background: linear-gradient(180deg, var(--sg-purple-light) 0%, var(--sg-purple) 60%, var(--sg-purple-deep) 100%);
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 2px 0 rgba(60, 20, 100, 0.5),
+    0 0 22px -4px var(--sg-purple-glow);
+}
+.snake-btn-primary:hover {
+  background: linear-gradient(180deg, #d4a8fa 0%, #af6ae7 60%, #8b50e8 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 3px 0 rgba(60, 20, 100, 0.5),
+    0 0 36px -4px rgba(157, 78, 221, 0.75);
+  transform: translateY(-1px);
+}
+
+/* variant: success (green) */
+.snake-btn-success {
+  background: linear-gradient(180deg, var(--sg-green-light) 0%, var(--sg-green) 60%, var(--sg-green-deep) 100%);
+  color: #04201a;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 2px 0 rgba(10, 80, 60, 0.5),
+    0 0 22px -4px rgba(67, 217, 173, 0.5);
+}
+.snake-btn-success:hover {
+  background: linear-gradient(180deg, #9af3dc 0%, #5ee2bb 60%, #3fc49d 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 3px 0 rgba(10, 80, 60, 0.5),
+    0 0 34px -4px rgba(67, 217, 173, 0.75);
+  transform: translateY(-1px);
+}
+
+/* variant: ghost (outline) */
+.snake-btn-ghost {
+  background: rgba(148, 163, 184, 0.04);
+  color: var(--sg-color-text);
+  border-color: rgba(148, 163, 184, 0.35);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+.snake-btn-ghost::before { opacity: 0.5; }
+.snake-btn-ghost:hover {
+  background: rgba(148, 163, 184, 0.12);
+  border-color: rgba(248, 250, 252, 0.7);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 0 18px -6px rgba(248, 250, 252, 0.3);
+  transform: translateY(-1px);
+}
+
+/* ----------------------------------------------------------------
+   Tabs (difficulty / mode)
+   ---------------------------------------------------------------- */
+.snake-tab {
+  font-family: var(--sg-font);
+  font-size: 0.75rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--sg-radius-sm);
+  border: 1px solid transparent;
+  color: var(--sg-color-muted);
+  cursor: pointer;
+  transition:
+    color var(--sg-transition),
+    background var(--sg-transition),
+    border-color var(--sg-transition),
+    box-shadow var(--sg-transition-slow);
+}
+.snake-tab:hover:not(:disabled) { color: var(--sg-color-text); background: rgba(148, 163, 184, 0.06); }
+.snake-tab:disabled { opacity: 0.4; cursor: not-allowed; }
+.snake-tab:focus-visible { outline: 2px solid var(--sg-green); outline-offset: 2px; }
+
+.snake-tab-active-green {
+  background: linear-gradient(180deg, #5de3b8 0%, var(--sg-green) 100%);
+  color: #04201a;
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 16px -4px rgba(67, 217, 173, 0.6);
+}
+.snake-tab-active-green:hover:not(:disabled) {
+  background: linear-gradient(180deg, #7aeccb 0%, #5ee2bb 100%);
+  color: #04201a;
+}
+
+.snake-tab-active-purple {
+  background: linear-gradient(180deg, var(--sg-purple-light) 0%, var(--sg-purple) 100%);
+  color: var(--sg-color-text);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 16px -4px rgba(157, 78, 221, 0.6);
+}
+.snake-tab-active-purple:hover:not(:disabled) {
+  background: linear-gradient(180deg, #c68af5 0%, #ae68e3 100%);
+  color: var(--sg-color-text);
+}
+
+/* ----------------------------------------------------------------
+   Arrow buttons (directional controls)
+   ---------------------------------------------------------------- */
+.snake-arrow-btn {
+  background: linear-gradient(180deg, #111a2e 0%, #0a0f1e 100%);
+  border: 1px solid var(--sg-color-border);
+  border-radius: var(--sg-radius);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition:
+    border-color var(--sg-transition),
+    box-shadow var(--sg-transition-slow),
+    transform var(--sg-transition-fast),
+    background var(--sg-transition);
+}
+.snake-arrow-btn:hover:not(:disabled) {
+  border-color: var(--sg-green);
+  background: linear-gradient(180deg, #152238 0%, #0e1524 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(67, 217, 173, 0.25),
+    0 0 14px -4px rgba(67, 217, 173, 0.5);
+}
+.snake-arrow-btn:active:not(:disabled) { transform: translateY(1px); }
+.snake-arrow-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.snake-arrow-btn:focus-visible { outline: 2px solid var(--sg-green); outline-offset: 2px; }
+
+/* ----------------------------------------------------------------
+   Combo bar (fills during combo window)
+   ---------------------------------------------------------------- */
+.snake-combo {
+  animation: snake-combo-fade linear forwards;
+}
+
+.snake-combo-bar {
+  display: inline-block;
+  width: 40px;
+  height: 3px;
+  background: var(--sg-pink);
+  border-radius: 2px;
+  transform-origin: left center;
+  animation: snake-combo-bar linear forwards;
+}
+
+/* ----------------------------------------------------------------
+   Keyframes
+   ---------------------------------------------------------------- */
+@keyframes snake-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+}
+
+@keyframes snake-food-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes snake-particle-burst {
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translate(var(--px, 0), var(--py, 0)) scale(0.2); opacity: 0; }
+}
+
+@keyframes combo-pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes snake-combo-fade {
+  0%, 60% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes snake-combo-bar {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+@keyframes countdown-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  40% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ----------------------------------------------------------------
+   Utilities (attach animations to elements)
+   ---------------------------------------------------------------- */
+.snake-shake { animation: snake-shake 0.18s ease-in-out; }
+.snake-food-pulse {
+  animation: snake-food-pulse 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+}
+.snake-particle {
+  animation-name: snake-particle-burst;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.combo-pop { animation: combo-pop 0.25s ease-out; }
+.countdown-pop { animation: countdown-pop 0.3s ease-out; }
+
+/* ----------------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .snake-shake,
+  .snake-food-pulse,
+  .snake-particle,
+  .combo-pop,
+  .countdown-pop,
+  .snake-combo,
+  .snake-combo-bar {
+    animation: none !important;
+  }
+
+  .snake-btn,
+  .snake-btn::before,
+  .snake-tab,
+  .snake-arrow-btn {
+    transition: none !important;
+    transform: none !important;
+  }
+}
