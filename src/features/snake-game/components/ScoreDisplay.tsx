@@ -37,7 +37,8 @@ export const ScoreDisplay = memo(function ScoreDisplay({ score, mode }: ScoreDis
           const row = Math.floor(index / 5);
           const cx = col * 24 + 10;
           const cy = row * 24 + 10;
-          const o = index < score ? 1 : 0.3;
+          const filled = index < Math.min(score, FOOD_TO_WIN_CASUAL);
+          const o = filled ? 1 : 0.3;
           return (
             <g key={index} opacity={o}>
               <circle cx={cx} cy={cy} r="10" fill="#46ECD5" opacity="0.1" />

@@ -1,10 +1,13 @@
-import type { Direction, Position, Difficulty } from '../types';
+import type { Direction, Position, Difficulty, FoodType } from '../types';
 
 export const GRID_SIZE = 15;
 export const FOOD_TO_WIN_CASUAL = 15;
 export const GAME_START_DELAY = 500;
 export const SVG_CANVAS_SIZE = 400;
 export const MAX_LEADERBOARD_ENTRIES = 10;
+export const COUNTDOWN_SECONDS = 3;
+export const COMBO_WINDOW_MS = 3000;
+export const PARTICLE_LIFETIME_MS = 600;
 
 export const DIFFICULTY_SPEEDS: Record<Difficulty, number> = {
   easy: 200,
@@ -13,9 +16,15 @@ export const DIFFICULTY_SPEEDS: Record<Difficulty, number> = {
 };
 
 export const DIFFICULTY_LABELS: Record<Difficulty, string> = {
-  easy: 'facil',
-  normal: 'normal',
-  hard: 'dificil',
+  easy: 'junior',
+  normal: 'pleno',
+  hard: 'senior',
+};
+
+export const FOOD_TYPES: Record<FoodType, { points: number; color: string; label: string; weight: number }> = {
+  function: { points: 1, color: '#46ECD5', label: 'function()', weight: 70 },
+  class: { points: 2, color: '#ffb86a', label: 'class{}', weight: 22 },
+  async: { points: 3, color: '#b14eff', label: 'async()', weight: 8 },
 };
 
 export const MODE_LABELS = {

@@ -97,6 +97,11 @@ export const GameOverlay = memo(function GameOverlay({
                       (e) => e.date === entry.date && e.name === entry.name,
                     );
 
+                const dateLabel = new Date(entry.date).toLocaleDateString('pt-BR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                });
+
                 return (
                   <div
                     key={`${entry.name}-${entry.date}`}
@@ -115,6 +120,9 @@ export const GameOverlay = memo(function GameOverlay({
                       )}
                     </span>
                     <span className="flex-1 truncate">{entry.name}</span>
+                    <span className="text-[#607088] shrink-0 hidden sm:inline">
+                      {dateLabel}
+                    </span>
                     <span className="text-[#607088] shrink-0">
                       {DIFFICULTY_LABELS[entry.difficulty]}
                     </span>
@@ -128,7 +136,7 @@ export const GameOverlay = memo(function GameOverlay({
 
         <button
           onClick={handleRestart}
-          className="font-['Fira_Code',sans-serif] text-[#90a1b9] hover:text-[#f8fafc] transition-colors underline text-sm"
+          className="font-['Fira_Code',sans-serif] text-[#90a1b9] hover:text-[#f8fafc] transition-colors underline text-sm focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
         >
           {status === 'victory' ? 'jogar-novamente' : 'tentar-novamente'}
         </button>

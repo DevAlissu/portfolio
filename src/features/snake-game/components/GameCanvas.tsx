@@ -1,18 +1,31 @@
 import { memo, useRef, useEffect } from 'react';
-import type { Position } from '../types';
+import type { Position, Food, Particle } from '../types';
 import { useGameStore } from '../store/useGameStore';
 import { gridToSvg, getSnakeDimensions } from '../utils/grid';
-import { DIFFICULTY_SPEEDS } from '../constants';
+import { DIFFICULTY_SPEEDS, FOOD_TYPES, PARTICLE_LIFETIME_MS } from '../constants';
 
 interface GameCanvasProps {
-  food: Position | null;
+  food: Food | null;
   gridSize: number;
+  particles: Particle[];
+  shakeKey: number;
 }
 
-export const GameCanvas = memo(function GameCanvas({ food, gridSize }: GameCanvasProps) {
+export const GameCanvas = memo(function GameCanvas({ food, gridSize, particles, shakeKey }: GameCanvasProps) {
   const pathRef = useRef<SVGPathElement>(null);
   const { snakeStrokeWidth } = getSnakeDimensions(gridSize);
   const foodPos = food ? gridToSvg(food.x, food.y, gridSize) : null;
+  const foodColor = food ? FOOD_TYPES[food.type].color : '#46ECD5';
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // trigger shake animation on key change
+  useEffect(() => {
+    if (!containerRef.current || shakeKey === 0) return;
+    const el = containerRef.current;
+    el.classList.remove('snake-shake');
+    void el.offsetWidth;
+    el.classList.add('snake-shake');
+  }, [shakeKey]);
 
   useEffect(() => {
     let animId: number;
@@ -41,8 +54,6 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize }: GameCanva
           return pos;
         });
 
-        // Tail extension: add an extra point that retracts toward
-        // the current tail, always on the same grid axis
         const prevTail = prevSnake[lastIdx];
         const currTail = snake[lastIdx]!;
         if (prevTail && (prevTail.x !== currTail.x || prevTail.y !== currTail.y)) {
@@ -75,10 +86,8 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize }: GameCanva
   }, [gridSize]);
 
   return (
-    <div className="bg-[#1d293d] rounded-lg shadow-[inset_1px_5px_11px_0px_rgba(2,18,27,0.71)] p-3 sm:p-6">
-      <div
-        className="relative bg-[#0a1628] rounded-sm overflow-hidden w-full max-w-[400px] aspect-square"
-      >
+    <div ref={containerRef} className="bg-[#1d293d] rounded-lg shadow-[inset_1px_5px_11px_0px_rgba(2,18,27,0.71)] p-3 sm:p-6 w-full">
+      <div className="relative bg-[#0a1628] rounded-sm overflow-hidden w-full max-w-[400px] aspect-square mx-auto">
         <svg
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 400 400"
@@ -94,12 +103,36 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize }: GameCanva
           />
 
           {foodPos && (
-            <g>
-              <circle cx={foodPos.x} cy={foodPos.y} r="10.3456" fill="#46ECD5" opacity="0.1" />
-              <circle cx={foodPos.x} cy={foodPos.y} r="7.34558" fill="#46ECD5" opacity="0.2" />
-              <circle cx={foodPos.x} cy={foodPos.y} r="4" fill="#46ECD5" />
+            <g className="snake-food-pulse" style={{ transformOrigin: `${foodPos.x}px ${foodPos.y}px` }}>
+              <circle cx={foodPos.x} cy={foodPos.y} r="10.3456" fill={foodColor} opacity="0.1" />
+              <circle cx={foodPos.x} cy={foodPos.y} r="7.34558" fill={foodColor} opacity="0.2" />
+              <circle cx={foodPos.x} cy={foodPos.y} r="4" fill={foodColor} />
             </g>
           )}
+
+          {particles.map((p) => {
+            const pos = gridToSvg(p.x, p.y, gridSize);
+            const angle = (p.id * 137.5) % 360;
+            const rad = (angle * Math.PI) / 180;
+            const dist = 18;
+            const dx = Math.cos(rad) * dist;
+            const dy = Math.sin(rad) * dist;
+            return (
+              <circle
+                key={p.id}
+                className="snake-particle"
+                style={{
+                  ['--px' as string]: `${dx}px`,
+                  ['--py' as string]: `${dy}px`,
+                  animationDuration: `${PARTICLE_LIFETIME_MS}ms`,
+                }}
+                cx={pos.x}
+                cy={pos.y}
+                r="3"
+                fill={p.color}
+              />
+            );
+          })}
         </svg>
       </div>
     </div>

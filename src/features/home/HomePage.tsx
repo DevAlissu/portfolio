@@ -44,7 +44,7 @@ export function HomePage() {
             </div>
           </div>
 
-          <div className="hidden lg:flex justify-end min-w-0">
+          <div className="flex justify-end min-w-0">
             <Suspense fallback={<div className="w-full" />}>
               <SnakeGame className="w-full" />
             </Suspense>

@@ -8,25 +8,47 @@ import { GameControls } from './components/GameControls';
 import { ScoreDisplay } from './components/ScoreDisplay';
 import { DecorativeBolt } from './components/DecorativeBolt';
 import { GameTabs } from './components/GameTabs';
+import { HighScoreBadge } from './components/HighScoreBadge';
+import { ComboBadge } from './components/ComboBadge';
+import { Countdown } from './components/Countdown';
+import { PauseOverlay } from './components/PauseOverlay';
+import { useSwipe } from './hooks/useSwipe';
 
 interface SnakeGameProps {
   className?: string;
 }
 
 export function SnakeGame({ className = '' }: SnakeGameProps) {
-  const { status, score, food, gridSize, difficulty, mode, leaderboard, actions } =
-    useSnakeGame();
+  const {
+    status,
+    score,
+    highScore,
+    food,
+    gridSize,
+    difficulty,
+    mode,
+    leaderboard,
+    combo,
+    particles,
+    shakeKey,
+    actions,
+  } = useSnakeGame();
 
-  const { setDirection, startGame } = actions;
+  const { setDirection, beginCountdown } = actions;
 
   const handleDirectionClick = useCallback(
     (direction: Direction) => setDirection(direction),
     [setDirection],
   );
 
-  const handleStartClick = useCallback(() => startGame(), [startGame]);
+  const handleStartClick = useCallback(() => beginCountdown(), [beginCountdown]);
 
-  const isPlaying = status === 'playing' || status === 'paused';
+  const swipeHandlers = useSwipe({
+    onSwipe: handleDirectionClick,
+    enabled: status === 'playing',
+  });
+
+  const isPlaying = status === 'playing' || status === 'paused' || status === 'countdown';
 
   return (
     <div
@@ -47,7 +69,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
 
       <div className="absolute inset-[-1px] pointer-events-none rounded-[inherit] shadow-[inset_0px_2px_0px_0px_rgba(255,255,255,0.3)]" />
 
-      <div className="relative flex flex-col gap-3">
+      <div className="relative flex flex-col gap-3 w-full lg:w-auto">
         <GameTabs
           difficulty={difficulty}
           mode={mode}
@@ -56,8 +78,13 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
           onMode={actions.setMode}
         />
 
-        <div className="relative">
-          <GameCanvas food={food} gridSize={gridSize} />
+        <div className="relative" {...swipeHandlers}>
+          <GameCanvas
+            food={food}
+            gridSize={gridSize}
+            particles={particles}
+            shakeKey={shakeKey}
+          />
           <GameOverlay
             status={status}
             score={score}
@@ -67,14 +94,33 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
             onSaveScore={actions.saveToLeaderboard}
           />
 
+          {status === 'countdown' && <Countdown onFinish={actions.startGame} />}
+
+          {status === 'paused' && (
+            <PauseOverlay onResume={actions.resumeGame} onQuit={actions.resetGame} />
+          )}
+
           {status === 'idle' && (
-            <div className="absolute bottom-12 left-1/2 -translate-x-1/2">
-              <button
-                onClick={handleStartClick}
-                className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm"
-              >
-                iniciar
-              </button>
+            <>
+              {highScore > 0 && (
+                <div className="absolute top-3 right-3 sm:top-6 sm:right-6 pointer-events-none">
+                  <HighScoreBadge highScore={highScore} />
+                </div>
+              )}
+              <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2">
+                <button
+                  onClick={handleStartClick}
+                  className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm focus-visible:outline-2 focus-visible:outline-[#f8fafc] focus-visible:outline-offset-2"
+                >
+                  iniciar
+                </button>
+              </div>
+            </>
+          )}
+
+          {status === 'playing' && combo > 1 && (
+            <div className="absolute top-3 right-3 sm:top-6 sm:right-6 pointer-events-none">
+              <ComboBadge combo={combo} />
             </div>
           )}
         </div>
@@ -88,7 +134,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
 
         <button
           onClick={actions.resetGame}
-          className="border border-[#f8fafc] hover:bg-[#f8fafc]/10 transition-colors px-3 py-2.5 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm w-full"
+          className="border border-[#f8fafc] hover:bg-[#f8fafc]/10 transition-colors px-3 py-2.5 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm w-full focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
         >
           pular
         </button>
