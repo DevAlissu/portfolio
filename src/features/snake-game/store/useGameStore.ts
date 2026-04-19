@@ -1,5 +1,15 @@
 import { create } from 'zustand';
-import type { GameStore, Position, Direction, Difficulty, GameMode, LeaderboardEntry } from '../types';
+import type {
+  GameStore,
+  Position,
+  Direction,
+  Difficulty,
+  GameMode,
+  LeaderboardEntry,
+  Food,
+  FoodType,
+  Particle,
+} from '../types';
 import {
   GRID_SIZE,
   FOOD_TO_WIN_CASUAL,
@@ -7,9 +17,22 @@ import {
   INITIAL_DIRECTION,
   OPPOSITE_DIRECTIONS,
   MAX_LEADERBOARD_ENTRIES,
+  FOOD_TYPES,
+  COMBO_WINDOW_MS,
+  PARTICLE_LIFETIME_MS,
 } from '../constants';
 
-function generateRandomFood(snake: Position[]): Position | null {
+function pickFoodType(): FoodType {
+  const totalWeight = Object.values(FOOD_TYPES).reduce((s, t) => s + t.weight, 0);
+  let r = Math.random() * totalWeight;
+  for (const [type, cfg] of Object.entries(FOOD_TYPES)) {
+    r -= cfg.weight;
+    if (r <= 0) return type as FoodType;
+  }
+  return 'function';
+}
+
+function generateRandomFood(snake: Position[]): Food | null {
   const totalCells = GRID_SIZE * GRID_SIZE;
   if (snake.length >= totalCells) return null;
 
@@ -21,7 +44,8 @@ function generateRandomFood(snake: Position[]): Position | null {
       }
     }
   }
-  return availableCells[Math.floor(Math.random() * availableCells.length)] ?? null;
+  const pos = availableCells[Math.floor(Math.random() * availableCells.length)];
+  return pos ? { ...pos, type: pickFoodType() } : null;
 }
 
 function getStoredHighScore(): number {
@@ -63,6 +87,19 @@ function saveLeaderboard(entries: LeaderboardEntry[]) {
   }
 }
 
+let particleIdSeq = 0;
+
+function spawnParticles(x: number, y: number, color: string, count = 8): Particle[] {
+  const now = performance.now();
+  return Array.from({ length: count }, () => ({
+    id: ++particleIdSeq,
+    x,
+    y,
+    color,
+    createdAt: now,
+  }));
+}
+
 export const useGameStore = create<GameStore>((set, get) => ({
   status: 'idle',
   score: 0,
@@ -78,6 +115,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
   difficulty: 'easy' as Difficulty,
   mode: 'casual' as GameMode,
   leaderboard: getStoredLeaderboard(),
+  combo: 0,
+  lastEatTime: 0,
+  particles: [],
+  shakeKey: 0,
 
   setDifficulty: (difficulty: Difficulty) => {
     const { status } = get();
@@ -91,17 +132,27 @@ export const useGameStore = create<GameStore>((set, get) => ({
     set({ mode });
   },
 
-  startGame: () => {
+  beginCountdown: () => {
     set({
-      status: 'playing',
+      status: 'countdown',
       score: 0,
       snake: INITIAL_SNAKE,
       prevSnake: INITIAL_SNAKE,
-      lastTickTime: performance.now(),
+      lastTickTime: 0,
       direction: INITIAL_DIRECTION,
       nextDirection: INITIAL_DIRECTION,
       directionQueue: [],
       food: generateRandomFood(INITIAL_SNAKE),
+      combo: 0,
+      lastEatTime: 0,
+      particles: [],
+    });
+  },
+
+  startGame: () => {
+    set({
+      status: 'playing',
+      lastTickTime: performance.now(),
     });
   },
 
@@ -114,10 +165,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   gameOver: () => {
-    const { score, highScore } = get();
+    const { score, highScore, shakeKey } = get();
     const newHighScore = Math.max(score, highScore);
     if (newHighScore > highScore) saveHighScore(newHighScore);
-    set({ status: 'game-over', highScore: newHighScore });
+    set({ status: 'game-over', highScore: newHighScore, combo: 0, shakeKey: shakeKey + 1 });
   },
 
   resetGame: () => {
@@ -131,6 +182,9 @@ export const useGameStore = create<GameStore>((set, get) => ({
       nextDirection: INITIAL_DIRECTION,
       directionQueue: [],
       food: generateRandomFood(INITIAL_SNAKE),
+      combo: 0,
+      lastEatTime: 0,
+      particles: [],
     });
   },
 
@@ -163,8 +217,12 @@ export const useGameStore = create<GameStore>((set, get) => ({
     }
   },
 
+  clearParticle: (id: number) => {
+    set({ particles: get().particles.filter((p) => p.id !== id) });
+  },
+
   moveSnake: () => {
-    const { snake, direction, directionQueue, food, status, mode } = get();
+    const { snake, direction, directionQueue, food, status, mode, combo, lastEatTime, particles, shakeKey } = get();
     if (status !== 'playing') return;
 
     let currentDirection = direction;
@@ -217,8 +275,13 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
     if (food && newHead.x === food.x && newHead.y === food.y) {
       const { score, highScore } = get();
-      const newScore = score + 1;
+      const foodCfg = FOOD_TYPES[food.type];
+      const withinCombo = tickTime - lastEatTime < COMBO_WINDOW_MS && lastEatTime > 0;
+      const newCombo = withinCombo ? combo + 1 : 1;
+      const comboMultiplier = Math.min(newCombo, 5);
+      const newScore = score + foodCfg.points * comboMultiplier;
       const newFood = generateRandomFood(newSnake);
+      const newParticles = [...particles, ...spawnParticles(food.x, food.y, foodCfg.color, 10)];
 
       if (!newFood || (mode === 'casual' && newScore >= FOOD_TO_WIN_CASUAL)) {
         const newHighScore = Math.max(newScore, highScore);
@@ -232,6 +295,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
           prevSnake: snake,
           lastTickTime: tickTime,
           food: newFood,
+          combo: newCombo,
+          lastEatTime: tickTime,
+          particles: newParticles,
+          shakeKey: shakeKey + 1,
         });
       } else {
         set({
@@ -241,16 +308,29 @@ export const useGameStore = create<GameStore>((set, get) => ({
           prevSnake: snake,
           lastTickTime: tickTime,
           food: newFood,
+          combo: newCombo,
+          lastEatTime: tickTime,
+          particles: newParticles,
+          shakeKey: shakeKey + 1,
         });
       }
     } else {
       newSnake.pop();
+      // break combo if window expired
+      const comboExpired = lastEatTime > 0 && tickTime - lastEatTime > COMBO_WINDOW_MS;
       set({
         ...dirUpdate,
         snake: newSnake,
         prevSnake: snake,
         lastTickTime: tickTime,
+        combo: comboExpired ? 0 : combo,
       });
+    }
+
+    // cleanup old particles
+    const livingParticles = get().particles.filter((p) => tickTime - p.createdAt < PARTICLE_LIFETIME_MS);
+    if (livingParticles.length !== get().particles.length) {
+      set({ particles: livingParticles });
     }
   },
 }));
