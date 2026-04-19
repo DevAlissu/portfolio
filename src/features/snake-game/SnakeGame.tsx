@@ -80,7 +80,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
             onDifficulty={actions.setDifficulty}
             onMode={actions.setMode}
           />
-          {highScore > 0 && <HighScoreBadge highScore={highScore} />}
+          {mode === 'competitive' && highScore > 0 && <HighScoreBadge highScore={highScore} />}
         </div>
 
         <div className="relative" {...swipeHandlers}>
