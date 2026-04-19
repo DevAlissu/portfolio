@@ -5,7 +5,9 @@ export interface ContactFormData {
 }
 
 export interface ContactFormErrors {
+  name?: string;
   email?: string;
+  message?: string;
 }
 
 export type ContactFormStatus = 'idle' | 'error' | 'success';

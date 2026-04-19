@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 
 interface ImageLightboxProps {
@@ -9,16 +9,12 @@ interface ImageLightboxProps {
 
 export function ImageLightbox({ images, startIndex, onClose }: ImageLightboxProps) {
   const [index, setIndex] = useState(startIndex);
+  const indexRef = useRef(index);
+  indexRef.current = index;
 
-  const prev = useCallback(() => {
-    setIndex((i) => (i > 0 ? i - 1 : images.length - 1));
-  }, [images.length]);
-
-  const next = useCallback(() => {
-    setIndex((i) => (i < images.length - 1 ? i + 1 : 0));
-  }, [images.length]);
-
-  const close = useCallback(() => onClose(index), [onClose, index]);
+  const prev = () => setIndex((i) => (i > 0 ? i - 1 : images.length - 1));
+  const next = () => setIndex((i) => (i < images.length - 1 ? i + 1 : 0));
+  const close = () => onClose(indexRef.current);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
@@ -29,16 +25,21 @@ export function ImageLightbox({ images, startIndex, onClose }: ImageLightboxProp
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [close, prev, next]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div
       className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90"
       onClick={close}
+      role="dialog"
+      aria-modal="true"
+      aria-label="Visualizador de imagens"
     >
       <button
         onClick={close}
-        className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors z-10 p-2"
+        aria-label="Fechar visualizador"
+        className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors z-10 p-2 focus-visible:outline-2 focus-visible:outline-white"
       >
         <X size={24} />
       </button>
@@ -50,7 +51,8 @@ export function ImageLightbox({ images, startIndex, onClose }: ImageLightboxProp
       {images.length > 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); prev(); }}
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors z-10 p-2 rounded-full hover:bg-white/10"
+          aria-label="Imagem anterior"
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors z-10 p-2 rounded-full hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white"
         >
           <ChevronLeft size={32} />
         </button>
@@ -66,7 +68,8 @@ export function ImageLightbox({ images, startIndex, onClose }: ImageLightboxProp
       {images.length > 1 && (
         <button
           onClick={(e) => { e.stopPropagation(); next(); }}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors z-10 p-2 rounded-full hover:bg-white/10"
+          aria-label="Proxima imagem"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition-colors z-10 p-2 rounded-full hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white"
         >
           <ChevronRight size={32} />
         </button>

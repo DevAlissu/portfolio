@@ -5,14 +5,14 @@ import { gridToSvg, getSnakeDimensions } from '../utils/grid';
 import { DIFFICULTY_SPEEDS } from '../constants';
 
 interface GameCanvasProps {
-  food: Position;
+  food: Position | null;
   gridSize: number;
 }
 
 export const GameCanvas = memo(function GameCanvas({ food, gridSize }: GameCanvasProps) {
   const pathRef = useRef<SVGPathElement>(null);
   const { snakeStrokeWidth } = getSnakeDimensions(gridSize);
-  const foodPos = gridToSvg(food.x, food.y, gridSize);
+  const foodPos = food ? gridToSvg(food.x, food.y, gridSize) : null;
 
   useEffect(() => {
     let animId: number;
@@ -93,11 +93,13 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize }: GameCanva
             fill="none"
           />
 
-          <g>
-            <circle cx={foodPos.x} cy={foodPos.y} r="10.3456" fill="#46ECD5" opacity="0.1" />
-            <circle cx={foodPos.x} cy={foodPos.y} r="7.34558" fill="#46ECD5" opacity="0.2" />
-            <circle cx={foodPos.x} cy={foodPos.y} r="4" fill="#46ECD5" />
-          </g>
+          {foodPos && (
+            <g>
+              <circle cx={foodPos.x} cy={foodPos.y} r="10.3456" fill="#46ECD5" opacity="0.1" />
+              <circle cx={foodPos.x} cy={foodPos.y} r="7.34558" fill="#46ECD5" opacity="0.2" />
+              <circle cx={foodPos.x} cy={foodPos.y} r="4" fill="#46ECD5" />
+            </g>
+          )}
         </svg>
       </div>
     </div>

@@ -20,6 +20,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
       ? [project.image]
       : [];
 
+  // reset slide index when project changes to avoid out-of-bounds
+  useEffect(() => {
+    setActiveSlide(0);
+  }, [project.id]);
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (lightboxOpen) return;
@@ -84,14 +89,15 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="flex items-center gap-1 shrink-0">
             <button
               onClick={() => setExpanded((p) => !p)}
-              className="hidden sm:flex text-[#90a1b9] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d]"
-              title={expanded ? 'Reduzir' : 'Expandir'}
+              aria-label={expanded ? 'Reduzir modal' : 'Expandir modal'}
+              className="hidden sm:flex text-[#90a1b9] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d] focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
             >
               {expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
             </button>
             <button
               onClick={onClose}
-              className="text-[#90a1b9] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d]"
+              aria-label="Fechar modal"
+              className="text-[#90a1b9] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d] focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
             >
               <X size={18} />
             </button>
@@ -104,13 +110,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {allImages.length > 0 ? (
             <div className="space-y-3">
               {/* Active slide */}
-              <div
-                className="rounded-md overflow-hidden bg-[#1d293d] cursor-pointer group/img relative"
+              <button
+                type="button"
+                aria-label="Ampliar imagem"
+                className="rounded-md overflow-hidden bg-[#1d293d] group/img relative w-full focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
                 onClick={() => setLightboxOpen(true)}
               >
                 <img
                   src={allImages[activeSlide]}
                   alt={`${project.title} ${activeSlide + 1}`}
+                  loading="lazy"
                   className={`w-full h-auto ${imgMaxH} object-contain group-hover/img:brightness-110 transition-all`}
                 />
                 {allImages.length > 1 && (
@@ -118,15 +127,18 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     {activeSlide + 1} / {allImages.length}
                   </div>
                 )}
-              </div>
+              </button>
 
               {/* Thumbnails */}
               {allImages.length > 1 && (
                 <div className="flex gap-2 overflow-x-auto pb-1">
                   {allImages.map((img, i) => (
-                    <div
+                    <button
                       key={i}
-                      className={`shrink-0 rounded overflow-hidden cursor-pointer transition-all w-16 h-12 sm:w-20 sm:h-14 ${
+                      type="button"
+                      aria-label={`Ir para imagem ${i + 1}`}
+                      aria-current={i === activeSlide}
+                      className={`shrink-0 rounded overflow-hidden transition-all w-16 h-12 sm:w-20 sm:h-14 focus-visible:outline-2 focus-visible:outline-[#ffb86a] ${
                         i === activeSlide
                           ? 'ring-2 ring-[#9d4edd] opacity-100'
                           : 'opacity-50 hover:opacity-80'
@@ -135,10 +147,11 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     >
                       <img
                         src={img}
-                        alt={`thumb ${i + 1}`}
+                        alt=""
+                        loading="lazy"
                         className="w-full h-full object-cover object-top"
                       />
-                    </div>
+                    </button>
                   ))}
                 </div>
               )}
