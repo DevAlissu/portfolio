@@ -21,13 +21,35 @@ export function useSnakeGame() {
   const pauseGame = useGameStore((s) => s.pauseGame);
   const resumeGame = useGameStore((s) => s.resumeGame);
   const resetGame = useGameStore((s) => s.resetGame);
-  const setDirection = useGameStore((s) => s.setDirection);
+  const storeSetDirection = useGameStore((s) => s.setDirection);
   const setDifficulty = useGameStore((s) => s.setDifficulty);
   const setMode = useGameStore((s) => s.setMode);
   const saveToLeaderboard = useGameStore((s) => s.saveToLeaderboard);
 
   const statusRef = useRef(status);
   statusRef.current = status;
+
+  const speed = DIFFICULTY_SPEEDS[difficulty];
+  const speedRef = useRef(speed);
+  speedRef.current = speed;
+
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const runTick = useCallback(() => {
+    if (statusRef.current === 'playing') {
+      useGameStore.getState().moveSnake();
+    }
+  }, []);
+
+  const scheduleTick = useCallback(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      runTick();
+      if (statusRef.current === 'playing') scheduleTick();
+    }, speedRef.current);
+  }, [runTick]);
+
+  const setDirection = storeSetDirection;
 
   const handleKeyPress = useCallback(
     (event: KeyboardEvent) => {
@@ -67,17 +89,22 @@ export function useSnakeGame() {
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [handleKeyPress]);
 
-  const speed = DIFFICULTY_SPEEDS[difficulty];
-
   useEffect(() => {
-    if (status !== 'playing') return;
-
-    const gameInterval = setInterval(() => {
-      useGameStore.getState().moveSnake();
-    }, speed);
-
-    return () => clearInterval(gameInterval);
-  }, [status, speed]);
+    if (status !== 'playing') {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+      return;
+    }
+    scheduleTick();
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [status, scheduleTick]);
 
   const remainingFood = mode === 'casual' ? Math.max(0, FOOD_TO_WIN_CASUAL - score) : null;
 

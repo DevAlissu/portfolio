@@ -20,6 +20,7 @@ import {
   FOOD_TYPES,
   COMBO_WINDOW_MS,
   PARTICLE_LIFETIME_MS,
+  MAX_DIRECTION_QUEUE,
 } from '../constants';
 
 function pickFoodType(): FoodType {
@@ -207,14 +208,19 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const { direction: currentDirection, directionQueue, status } = get();
     if (status !== 'playing') return;
 
+    // drop inputs when queue is saturated — prevents input lag from spam
+    if (directionQueue.length >= MAX_DIRECTION_QUEUE) return;
+
     const lastDirection =
       directionQueue.length > 0
         ? directionQueue[directionQueue.length - 1]
         : currentDirection;
 
-    if (OPPOSITE_DIRECTIONS[direction] !== lastDirection && direction !== lastDirection) {
-      set({ directionQueue: [...directionQueue, direction] });
-    }
+    // reject duplicates (same as pending last) and opposite (180 turn)
+    if (direction === lastDirection) return;
+    if (OPPOSITE_DIRECTIONS[direction] === lastDirection) return;
+
+    set({ directionQueue: [...directionQueue, direction] });
   },
 
   clearParticle: (id: number) => {

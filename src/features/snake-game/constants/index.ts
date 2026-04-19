@@ -8,11 +8,13 @@ export const MAX_LEADERBOARD_ENTRIES = 10;
 export const COUNTDOWN_SECONDS = 3;
 export const COMBO_WINDOW_MS = 3000;
 export const PARTICLE_LIFETIME_MS = 600;
+export const MAX_DIRECTION_QUEUE = 2;
+export const FAST_FORWARD_THRESHOLD = 0.35;
 
 export const DIFFICULTY_SPEEDS: Record<Difficulty, number> = {
-  easy: 200,
-  normal: 150,
-  hard: 100,
+  easy: 170,
+  normal: 140,
+  hard: 80,
 };
 
 export const DIFFICULTY_LABELS: Record<Difficulty, string> = {
