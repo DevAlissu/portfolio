@@ -9,7 +9,6 @@ import { ScoreDisplay } from './components/ScoreDisplay';
 import { DecorativeBolt } from './components/DecorativeBolt';
 import { GameTabs } from './components/GameTabs';
 import { HighScoreBadge } from './components/HighScoreBadge';
-import { ComboBadge } from './components/ComboBadge';
 import { Countdown } from './components/Countdown';
 import { PauseOverlay } from './components/PauseOverlay';
 import { useSwipe } from './hooks/useSwipe';
@@ -29,6 +28,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
     mode,
     leaderboard,
     combo,
+    lastEatTime,
     particles,
     shakeKey,
     actions,
@@ -89,12 +89,9 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
             status={status}
             score={score}
             mode={mode}
-            difficulty={difficulty}
             leaderboard={leaderboard}
             onStart={handleStartClick}
             onSaveScore={actions.saveToLeaderboard}
-            onSetDifficulty={actions.setDifficulty}
-            onSetMode={actions.setMode}
           />
 
           {status === 'countdown' && <Countdown onFinish={actions.startGame} />}
@@ -121,18 +118,13 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
             </>
           )}
 
-          {status === 'playing' && combo > 1 && (
-            <div className="absolute top-3 right-3 sm:top-6 sm:right-6 pointer-events-none">
-              <ComboBadge combo={combo} />
-            </div>
-          )}
         </div>
       </div>
 
       <div className="flex flex-col items-end justify-between w-full lg:w-[180px] gap-6">
         <div className="flex flex-col gap-6 w-full">
           <GameControls status={status} onDirection={handleDirectionClick} />
-          <ScoreDisplay score={score} mode={mode} />
+          <ScoreDisplay score={score} mode={mode} combo={combo} lastEatTime={lastEatTime} />
         </div>
 
         <button

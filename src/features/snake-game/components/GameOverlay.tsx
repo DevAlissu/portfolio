@@ -1,33 +1,25 @@
 import { memo, useState } from 'react';
-import type { GameStatus, GameMode, LeaderboardEntry, Difficulty } from '../types';
-import { DIFFICULTY_LABELS, MODE_LABELS } from '../constants';
+import type { GameStatus, GameMode, LeaderboardEntry } from '../types';
+import { DIFFICULTY_LABELS } from '../constants';
 
 const MEDALS = ['#FFD700', '#C0C0C0', '#CD7F32'] as const;
-const DIFFICULTIES: Difficulty[] = ['easy', 'normal', 'hard'];
-const MODES: GameMode[] = ['casual', 'competitive'];
 
 interface GameOverlayProps {
   status: GameStatus;
   score: number;
   mode: GameMode;
-  difficulty: Difficulty;
   leaderboard: LeaderboardEntry[];
   onStart: () => void;
   onSaveScore: (name: string) => void;
-  onSetDifficulty: (d: Difficulty) => void;
-  onSetMode: (m: GameMode) => void;
 }
 
 export const GameOverlay = memo(function GameOverlay({
   status,
   score,
   mode,
-  difficulty,
   leaderboard,
   onStart,
   onSaveScore,
-  onSetDifficulty,
-  onSetMode,
 }: GameOverlayProps) {
   const [playerName, setPlayerName] = useState('');
   const [saved, setSaved] = useState(false);
@@ -144,44 +136,12 @@ export const GameOverlay = memo(function GameOverlay({
           </div>
         )}
 
-        <div className="pt-2 space-y-3">
-          <div className="flex flex-wrap items-center justify-center gap-1.5 font-['Fira_Code',sans-serif] text-[11px]">
-            {DIFFICULTIES.map((d) => (
-              <button
-                key={d}
-                onClick={() => onSetDifficulty(d)}
-                className={`px-2 py-1 rounded transition-colors ${
-                  difficulty === d
-                    ? 'bg-[#43D9AD] text-[#020618]'
-                    : 'text-[#90a1b9] hover:text-[#f8fafc] border border-[#314158]'
-                }`}
-              >
-                {DIFFICULTY_LABELS[d]}
-              </button>
-            ))}
-            <span className="text-[#314158] mx-0.5">|</span>
-            {MODES.map((m) => (
-              <button
-                key={m}
-                onClick={() => onSetMode(m)}
-                className={`px-2 py-1 rounded transition-colors ${
-                  mode === m
-                    ? 'bg-[#9d4edd] text-[#f8fafc]'
-                    : 'text-[#90a1b9] hover:text-[#f8fafc] border border-[#314158]'
-                }`}
-              >
-                {MODE_LABELS[m]}
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={handleRestart}
-            className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm focus-visible:outline-2 focus-visible:outline-[#f8fafc] focus-visible:outline-offset-2"
-          >
-            {buttonLabel}
-          </button>
-        </div>
+        <button
+          onClick={handleRestart}
+          className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm focus-visible:outline-2 focus-visible:outline-[#f8fafc] focus-visible:outline-offset-2"
+        >
+          {buttonLabel}
+        </button>
       </div>
     </div>
   );

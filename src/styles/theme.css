@@ -105,6 +105,31 @@
   animation: combo-pop 0.25s ease-out;
 }
 
+@keyframes snake-combo-fade {
+  0% { opacity: 1; }
+  60% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.snake-combo {
+  animation: snake-combo-fade linear forwards;
+}
+
+@keyframes snake-combo-bar {
+  0% { transform: scaleX(1); }
+  100% { transform: scaleX(0); }
+}
+
+.snake-combo-bar {
+  display: inline-block;
+  width: 40px;
+  height: 3px;
+  background: #b14eff;
+  border-radius: 2px;
+  transform-origin: left center;
+  animation: snake-combo-bar linear forwards;
+}
+
 @keyframes countdown-pop {
   0% { transform: scale(0.4); opacity: 0; }
   40% { transform: scale(1.1); opacity: 1; }

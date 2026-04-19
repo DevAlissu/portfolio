@@ -276,9 +276,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
     if (food && newHead.x === food.x && newHead.y === food.y) {
       const { score, highScore } = get();
       const foodCfg = FOOD_TYPES[food.type];
+      const isCompetitive = mode === 'competitive';
       const withinCombo = tickTime - lastEatTime < COMBO_WINDOW_MS && lastEatTime > 0;
-      const newCombo = withinCombo ? combo + 1 : 1;
-      const comboMultiplier = Math.min(newCombo, 5);
+      const newCombo = isCompetitive && withinCombo ? combo + 1 : 1;
+      const comboMultiplier = isCompetitive ? Math.min(newCombo, 5) : 1;
       const newScore = score + foodCfg.points * comboMultiplier;
       const newFood = generateRandomFood(newSnake);
       const newParticles = [...particles, ...spawnParticles(food.x, food.y, foodCfg.color, 10)];
