@@ -17,12 +17,14 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
   const { status, score, food, gridSize, difficulty, mode, leaderboard, actions } =
     useSnakeGame();
 
+  const { setDirection, startGame } = actions;
+
   const handleDirectionClick = useCallback(
-    (direction: Direction) => actions.setDirection(direction),
-    [actions.setDirection],
+    (direction: Direction) => setDirection(direction),
+    [setDirection],
   );
 
-  const handleStartClick = useCallback(() => actions.startGame(), [actions.startGame]);
+  const handleStartClick = useCallback(() => startGame(), [startGame]);
 
   const isPlaying = status === 'playing' || status === 'paused';
 

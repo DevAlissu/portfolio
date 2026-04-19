@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -16,7 +17,9 @@ export function Layout() {
       <div className="relative z-10 flex flex-col h-full min-h-0">
         <Header />
         <main key={location.pathname} className="flex-1 min-h-0 overflow-auto animate-tab-fade-in">
-          <Outlet />
+          <Suspense fallback={null}>
+            <Outlet />
+          </Suspense>
         </main>
         <Footer />
       </div>

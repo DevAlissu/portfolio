@@ -1,4 +1,8 @@
-import { SnakeGame } from '../snake-game';
+import { lazy, Suspense } from 'react';
+
+const SnakeGame = lazy(() =>
+  import('../snake-game').then((m) => ({ default: m.SnakeGame })),
+);
 
 export function HomePage() {
   return (
@@ -41,7 +45,9 @@ export function HomePage() {
           </div>
 
           <div className="hidden lg:flex justify-end min-w-0">
-            <SnakeGame className="w-full" />
+            <Suspense fallback={<div className="w-full" />}>
+              <SnakeGame className="w-full" />
+            </Suspense>
           </div>
         </div>
       </div>

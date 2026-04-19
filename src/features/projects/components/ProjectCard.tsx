@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { ExternalLink, Lock } from 'lucide-react';
 import type { Project } from '../types';
 
@@ -7,7 +8,7 @@ interface ProjectCardProps {
   onSelect: (project: Project) => void;
 }
 
-export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
+export const ProjectCard = memo(function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
   return (
     <div className="group transition-all duration-200">
       <div className="mb-4">
@@ -20,7 +21,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
       <div className="bg-[#1d293d] rounded-lg overflow-hidden border border-[#314158] group-hover:border-[#9d4edd]/50 transition-all">
         {project.image ? (
           <div className="relative h-[175px] bg-[#0a1628] overflow-hidden">
-            <img src={project.image} alt={project.title} className="w-full h-full object-cover object-top" />
+            <img src={project.image} alt={project.title} loading="lazy" width="400" height="175" className="w-full h-full object-cover object-top" />
           </div>
         ) : (
           <div className="h-[145px] bg-[#0a1628] flex items-center justify-center">
@@ -70,7 +71,7 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
           </div>
           <button
             onClick={() => onSelect(project)}
-            className="bg-[#1d293d] border border-[#90a1b9] hover:border-[#f8fafc] transition-colors px-4 py-2 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-[13px] cursor-pointer"
+            className="bg-[#1d293d] border border-[#90a1b9] hover:border-[#f8fafc] transition-colors px-4 py-2 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-[13px] cursor-pointer focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
           >
             ver-detalhes
           </button>
@@ -78,4 +79,4 @@ export function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
       </div>
     </div>
   );
-}
+});
