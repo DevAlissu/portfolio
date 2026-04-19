@@ -23,7 +23,7 @@ export const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 
 export const FOOD_TYPES: Record<FoodType, { points: number; color: string; label: string; weight: number }> = {
   function: { points: 1, color: '#46ECD5', label: 'function()', weight: 70 },
-  class: { points: 2, color: '#ffb86a', label: 'class{}', weight: 22 },
+  class: { points: 2, color: '#ffa1ad', label: 'class{}', weight: 22 },
   async: { points: 3, color: '#b14eff', label: 'async()', weight: 8 },
 };
 

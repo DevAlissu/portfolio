@@ -18,7 +18,7 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
   const disabled = status !== 'playing';
 
   const buttonClass =
-    'bg-[#0a0a0a] border border-[#314158] hover:border-[#43D9AD] disabled:hover:border-[#314158] disabled:opacity-50 transition-colors rounded-lg w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center';
+    'snake-arrow-btn w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center';
 
   return (
     <div className="bg-[#1d293d] rounded-lg p-3">

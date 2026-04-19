@@ -21,32 +21,24 @@ export const GameTabs = memo(function GameTabs({
   onMode,
 }: GameTabsProps) {
   return (
-    <div className="flex gap-1 font-['Fira_Code',sans-serif] text-xs">
+    <div className="flex gap-1 items-center">
       {DIFFICULTIES.map((d) => (
         <button
           key={d}
           onClick={() => onDifficulty(d)}
           disabled={disabled}
-          className={`px-2.5 py-1.5 rounded transition-colors ${
-            difficulty === d
-              ? 'bg-[#43D9AD] text-[#020618]'
-              : 'text-[#90a1b9] hover:text-[#f8fafc] disabled:opacity-40'
-          }`}
+          className={`snake-tab ${difficulty === d ? 'snake-tab-active-green' : ''}`}
         >
           {DIFFICULTY_LABELS[d]}
         </button>
       ))}
-      <div className="w-px bg-[#314158] mx-1" />
+      <div className="w-px h-5 bg-[#314158] mx-1" />
       {MODES.map((m) => (
         <button
           key={m}
           onClick={() => onMode(m)}
           disabled={disabled}
-          className={`px-2.5 py-1.5 rounded transition-colors ${
-            mode === m
-              ? 'bg-[#9d4edd] text-[#f8fafc]'
-              : 'text-[#90a1b9] hover:text-[#f8fafc] disabled:opacity-40'
-          }`}
+          className={`snake-tab ${mode === m ? 'snake-tab-active-purple' : ''}`}
         >
           {MODE_LABELS[m]}
         </button>
