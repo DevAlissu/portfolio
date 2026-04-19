@@ -89,9 +89,12 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
             status={status}
             score={score}
             mode={mode}
+            difficulty={difficulty}
             leaderboard={leaderboard}
             onStart={handleStartClick}
             onSaveScore={actions.saveToLeaderboard}
+            onSetDifficulty={actions.setDifficulty}
+            onSetMode={actions.setMode}
           />
 
           {status === 'countdown' && <Countdown onFinish={actions.startGame} />}

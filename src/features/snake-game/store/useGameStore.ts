@@ -122,13 +122,13 @@ export const useGameStore = create<GameStore>((set, get) => ({
 
   setDifficulty: (difficulty: Difficulty) => {
     const { status } = get();
-    if (status !== 'idle') return;
+    if (status === 'playing' || status === 'paused' || status === 'countdown') return;
     set({ difficulty });
   },
 
   setMode: (mode: GameMode) => {
     const { status } = get();
-    if (status !== 'idle') return;
+    if (status === 'playing' || status === 'paused' || status === 'countdown') return;
     set({ mode });
   },
 
