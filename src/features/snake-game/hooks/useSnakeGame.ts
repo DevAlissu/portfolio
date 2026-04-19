@@ -6,12 +6,17 @@ import type { Direction } from '../types';
 export function useSnakeGame() {
   const status = useGameStore((s) => s.status);
   const score = useGameStore((s) => s.score);
+  const highScore = useGameStore((s) => s.highScore);
   const food = useGameStore((s) => s.food);
   const gridSize = useGameStore((s) => s.gridSize);
   const difficulty = useGameStore((s) => s.difficulty);
   const mode = useGameStore((s) => s.mode);
   const leaderboard = useGameStore((s) => s.leaderboard);
+  const combo = useGameStore((s) => s.combo);
+  const particles = useGameStore((s) => s.particles);
+  const shakeKey = useGameStore((s) => s.shakeKey);
   const startGame = useGameStore((s) => s.startGame);
+  const beginCountdown = useGameStore((s) => s.beginCountdown);
   const pauseGame = useGameStore((s) => s.pauseGame);
   const resumeGame = useGameStore((s) => s.resumeGame);
   const resetGame = useGameStore((s) => s.resetGame);
@@ -28,9 +33,11 @@ export function useSnakeGame() {
       const key = event.key.toLowerCase();
 
       if (key === ' ' || key === 'spacebar') {
-        event.preventDefault();
-        if (statusRef.current === 'playing') pauseGame();
-        else if (statusRef.current === 'paused') resumeGame();
+        if (statusRef.current === 'playing' || statusRef.current === 'paused') {
+          event.preventDefault();
+          if (statusRef.current === 'playing') pauseGame();
+          else resumeGame();
+        }
         return;
       }
 
@@ -76,14 +83,19 @@ export function useSnakeGame() {
   return {
     status,
     score,
+    highScore,
     food,
     gridSize,
     difficulty,
     mode,
     leaderboard,
+    combo,
+    particles,
+    shakeKey,
     remainingFood,
     actions: {
       startGame,
+      beginCountdown,
       pauseGame,
       resumeGame,
       resetGame,
