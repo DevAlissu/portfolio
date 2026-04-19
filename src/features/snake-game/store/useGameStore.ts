@@ -9,38 +9,57 @@ import {
   MAX_LEADERBOARD_ENTRIES,
 } from '../constants';
 
-function generateRandomFood(snake: Position[]): Position {
-  let newFood: Position;
-  do {
-    newFood = {
-      x: Math.floor(Math.random() * GRID_SIZE),
-      y: Math.floor(Math.random() * GRID_SIZE),
-    };
-  } while (snake.some((segment) => segment.x === newFood.x && segment.y === newFood.y));
-  return newFood;
+function generateRandomFood(snake: Position[]): Position | null {
+  const totalCells = GRID_SIZE * GRID_SIZE;
+  if (snake.length >= totalCells) return null;
+
+  const availableCells: Position[] = [];
+  for (let x = 0; x < GRID_SIZE; x++) {
+    for (let y = 0; y < GRID_SIZE; y++) {
+      if (!snake.some((seg) => seg.x === x && seg.y === y)) {
+        availableCells.push({ x, y });
+      }
+    }
+  }
+  return availableCells[Math.floor(Math.random() * availableCells.length)] ?? null;
 }
 
 function getStoredHighScore(): number {
   if (typeof window === 'undefined') return 0;
-  return parseInt(localStorage.getItem('snakeHighScore') || '0');
+  try {
+    return parseInt(localStorage.getItem('snakeHighScore') || '0');
+  } catch {
+    return 0;
+  }
 }
 
 function saveHighScore(score: number) {
-  if (typeof window !== 'undefined') {
+  if (typeof window === 'undefined') return;
+  try {
     localStorage.setItem('snakeHighScore', score.toString());
+  } catch {
+    // localStorage full or disabled
   }
 }
 
 function getStoredLeaderboard(): LeaderboardEntry[] {
   if (typeof window === 'undefined') return [];
-  const stored = localStorage.getItem('snakeLeaderboard');
-  if (!stored) return [];
-  return JSON.parse(stored) as LeaderboardEntry[];
+  try {
+    const stored = localStorage.getItem('snakeLeaderboard');
+    if (!stored) return [];
+    const parsed = JSON.parse(stored);
+    return Array.isArray(parsed) ? (parsed as LeaderboardEntry[]) : [];
+  } catch {
+    return [];
+  }
 }
 
 function saveLeaderboard(entries: LeaderboardEntry[]) {
-  if (typeof window !== 'undefined') {
+  if (typeof window === 'undefined') return;
+  try {
     localStorage.setItem('snakeLeaderboard', JSON.stringify(entries));
+  } catch {
+    // localStorage full or disabled
   }
 }
 
@@ -91,7 +110,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   resumeGame: () => {
-    if (get().status === 'paused') set({ status: 'playing' });
+    if (get().status === 'paused') set({ status: 'playing', lastTickTime: performance.now() });
   },
 
   gameOver: () => {
@@ -196,12 +215,12 @@ export const useGameStore = create<GameStore>((set, get) => ({
     const newSnake = [newHead, ...snake];
     const tickTime = performance.now();
 
-    if (newHead.x === food.x && newHead.y === food.y) {
+    if (food && newHead.x === food.x && newHead.y === food.y) {
       const { score, highScore } = get();
       const newScore = score + 1;
       const newFood = generateRandomFood(newSnake);
 
-      if (mode === 'casual' && newScore >= FOOD_TO_WIN_CASUAL) {
+      if (!newFood || (mode === 'casual' && newScore >= FOOD_TO_WIN_CASUAL)) {
         const newHighScore = Math.max(newScore, highScore);
         if (newHighScore > highScore) saveHighScore(newHighScore);
         set({

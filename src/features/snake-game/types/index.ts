@@ -28,7 +28,7 @@ export interface GameState {
   direction: Direction;
   nextDirection: Direction;
   directionQueue: Direction[];
-  food: Position;
+  food: Position | null;
   gridSize: number;
   difficulty: Difficulty;
   mode: GameMode;
