@@ -6,9 +6,9 @@ const SnakeGame = lazy(() =>
 
 export function HomePage() {
   return (
-    <div className="h-full relative overflow-hidden">
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-20">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+    <div className="min-h-full relative">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="space-y-8 lg:space-y-12">
             <div className="space-y-4">
               <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-lg">

@@ -53,7 +53,7 @@ export const GameOverlay = memo(function GameOverlay({
         </p>
 
         {isCompetitive && (
-          <p className="font-['Fira_Code',sans-serif] text-[#ffb86a] text-lg">
+          <p className="font-['Fira_Code',sans-serif] text-[#46ECD5] text-lg">
             pontos: {score}
           </p>
         )}
@@ -76,7 +76,7 @@ export const GameOverlay = memo(function GameOverlay({
               <button
                 onClick={handleSave}
                 disabled={!playerName.trim()}
-                className="bg-[#43D9AD] hover:bg-[#43D9AD]/80 disabled:opacity-40 px-3 py-1.5 rounded font-['Fira_Code',sans-serif] text-[#020618] text-sm transition-colors"
+                className="snake-btn snake-btn-success snake-btn-compact"
               >
                 salvar
               </button>
@@ -136,10 +136,7 @@ export const GameOverlay = memo(function GameOverlay({
           </div>
         )}
 
-        <button
-          onClick={handleRestart}
-          className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm focus-visible:outline-2 focus-visible:outline-[#f8fafc] focus-visible:outline-offset-2"
-        >
+        <button onClick={handleRestart} className="snake-btn snake-btn-primary">
           {buttonLabel}
         </button>
       </div>

@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import './styles/snake-game.css';
 import { useSnakeGame } from './hooks/useSnakeGame';
 import { BOLT_VARIANTS } from './constants';
 import type { Direction } from './types';
@@ -52,7 +53,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
 
   return (
     <div
-      className={`backdrop-blur-[32px] content-stretch flex flex-col lg:flex-row gap-4 sm:gap-6 items-start p-4 sm:p-6 relative rounded-lg min-w-0 max-w-full ${className}`}
+      className={`backdrop-blur-[32px] content-stretch flex flex-col lg:flex-row gap-4 sm:gap-8 items-start p-4 sm:p-6 relative rounded-lg min-w-0 max-w-full ${className}`}
       style={{
         backgroundImage:
           'linear-gradient(152.11deg, rgba(52, 3, 78, 0.7) 1.7049%, rgba(33, 2, 60, 0.09) 81.819%)',
@@ -70,7 +71,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
       <div className="absolute inset-[-1px] pointer-events-none rounded-[inherit] shadow-[inset_0px_2px_0px_0px_rgba(255,255,255,0.3)]" />
 
       <div className="relative flex flex-col gap-3 w-full lg:w-auto">
-        <div className="flex items-center justify-between gap-2">
+        <div className="flex items-center justify-between gap-2 pl-2 sm:pl-4">
           <GameTabs
             difficulty={difficulty}
             mode={mode}
@@ -105,10 +106,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
 
           {status === 'idle' && (
             <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2">
-              <button
-                onClick={handleStartClick}
-                className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm focus-visible:outline-2 focus-visible:outline-[#f8fafc] focus-visible:outline-offset-2"
-              >
+              <button onClick={handleStartClick} className="snake-btn snake-btn-primary">
                 iniciar
               </button>
             </div>
@@ -123,10 +121,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
           <ScoreDisplay score={score} mode={mode} combo={combo} lastEatTime={lastEatTime} />
         </div>
 
-        <button
-          onClick={actions.resetGame}
-          className="border border-[#f8fafc] hover:bg-[#f8fafc]/10 transition-colors px-3 py-2 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-xs w-full focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
-        >
+        <button onClick={actions.resetGame} className="snake-btn snake-btn-ghost snake-btn-compact w-full">
           pular
         </button>
       </div>

@@ -23,8 +23,8 @@ export function Countdown({ onFinish }: CountdownProps) {
     <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
       <div
         key={String(value)}
-        className="font-['Fira_Code',sans-serif] font-bold text-[#ffb86a] text-7xl countdown-pop"
-        style={{ textShadow: '0 0 20px rgba(255, 184, 106, 0.6)' }}
+        className="font-['Fira_Code',sans-serif] font-bold text-[#c490f7] text-7xl countdown-pop"
+        style={{ textShadow: '0 0 24px rgba(196, 144, 247, 0.7)' }}
       >
         {value === 'go' ? 'GO!' : value}
       </div>
