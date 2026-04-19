@@ -13,10 +13,19 @@ interface TabItemProps {
 export function TabItem({ tab, isActive, canClose, onSelect, onClose }: TabItemProps) {
   return (
     <div
-      className={`group relative flex items-center gap-2 px-4 py-3 border-r border-[#314158] cursor-pointer shrink-0 transition-colors ${
+      role="tab"
+      aria-selected={isActive}
+      tabIndex={0}
+      onClick={() => onSelect(tab)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onSelect(tab);
+        }
+      }}
+      className={`group relative flex items-center gap-2 px-4 py-3 border-r border-[#314158] cursor-pointer shrink-0 transition-colors focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-[-2px] ${
         isActive ? 'text-[#f8fafc]' : 'text-[#90a1b9] hover:text-[#f8fafc]'
       }`}
-      onClick={() => onSelect(tab)}
     >
       {isActive && (
         <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#ffb86a]" />
@@ -30,7 +39,8 @@ export function TabItem({ tab, isActive, canClose, onSelect, onClose }: TabItemP
             e.stopPropagation();
             onClose(tab);
           }}
-          className="opacity-0 group-hover:opacity-100 hover:text-[#f8fafc] transition-opacity ml-1"
+          aria-label={`Fechar ${TAB_LABELS[tab]}`}
+          className="opacity-0 group-hover:opacity-100 focus-visible:opacity-100 hover:text-[#f8fafc] transition-opacity ml-1"
         >
           <X size={14} />
         </button>

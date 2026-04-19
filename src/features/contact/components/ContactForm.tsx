@@ -72,7 +72,7 @@ export function ContactForm({ formData, formErrors, onChange, onSubmit }: Contac
 
       <button
         type="submit"
-        className="bg-[#ffd6a7] hover:bg-[#ffd6a7]/90 transition-colors px-4 py-2.5 rounded-lg font-['Fira_Code',sans-serif] text-[#020618] text-[14px]"
+        className="bg-[#ffd6a7] hover:bg-[#ffd6a7]/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors px-4 py-2.5 rounded-lg font-['Fira_Code',sans-serif] text-[#020618] text-[14px] focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
       >
         enviar-mensagem
       </button>

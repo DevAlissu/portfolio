@@ -29,9 +29,15 @@ export function useContactForm() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (formStatus === 'success') return;
 
-    if (!EMAIL_REGEX.test(formData.email)) {
-      setFormErrors({ email: 'email invalido' });
+    const errors: ContactFormErrors = {};
+    if (!formData.name.trim()) errors.name = 'nome obrigatorio';
+    if (!EMAIL_REGEX.test(formData.email)) errors.email = 'email invalido';
+    if (!formData.message.trim()) errors.message = 'mensagem obrigatoria';
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
       setFormStatus('error');
       return;
     }
