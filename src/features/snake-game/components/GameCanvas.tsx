@@ -103,7 +103,7 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize, particles, 
           />
 
           {foodPos && (
-            <g className="snake-food-pulse" style={{ transformOrigin: `${foodPos.x}px ${foodPos.y}px` }}>
+            <g>
               <circle cx={foodPos.x} cy={foodPos.y} r="10.3456" fill={foodColor} opacity="0.1" />
               <circle cx={foodPos.x} cy={foodPos.y} r="7.34558" fill={foodColor} opacity="0.2" />
               <circle cx={foodPos.x} cy={foodPos.y} r="4" fill={foodColor} />
