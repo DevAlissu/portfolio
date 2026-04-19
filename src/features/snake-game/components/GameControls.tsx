@@ -18,32 +18,35 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
   const disabled = status !== 'playing';
 
   const buttonClass =
-    'bg-[#0a0a0a] border border-[#314158] hover:border-[#43D9AD] disabled:hover:border-[#314158] disabled:opacity-50 transition-colors rounded-lg w-12 h-12 flex items-center justify-center';
+    'bg-[#0a0a0a] border border-[#314158] hover:border-[#43D9AD] disabled:hover:border-[#314158] disabled:opacity-50 transition-colors rounded-lg w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center';
 
   return (
     <div className="bg-[#1d293d] rounded-lg p-3">
-      <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm leading-relaxed mb-0">
-        // use o teclado
-      </p>
-      <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm leading-relaxed">
-        // setas para jogar
+      <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-xs leading-tight">
+        // use teclado ou swipe
       </p>
 
-      <div className="flex flex-col gap-2 items-center mt-3">
-        <button onClick={() => onDirection('UP')} disabled={disabled} className={buttonClass}>
-          <svg className="w-[18px] h-[18px] rotate-180" fill="none" viewBox="0 0 32 32">
+      <div className="flex flex-col gap-1.5 items-center mt-3">
+        <button
+          onClick={() => onDirection('UP')}
+          disabled={disabled}
+          aria-label="Cima"
+          className={buttonClass}
+        >
+          <svg className="w-[14px] h-[14px] rotate-180" fill="none" viewBox="0 0 32 32">
             <path d={ARROW_PATH} fill="#F8FAFC" />
           </svg>
         </button>
-        <div className="flex gap-2">
+        <div className="flex gap-1.5">
           {ROW_BUTTONS.map(({ direction, rotation }) => (
             <button
               key={direction}
               onClick={() => onDirection(direction)}
               disabled={disabled}
+              aria-label={direction.toLowerCase()}
               className={buttonClass}
             >
-              <svg className={`w-[18px] h-[18px] ${rotation}`} fill="none" viewBox="0 0 32 32">
+              <svg className={`w-[14px] h-[14px] ${rotation}`} fill="none" viewBox="0 0 32 32">
                 <path d={ARROW_PATH} fill="#F8FAFC" />
               </svg>
             </button>

@@ -70,13 +70,16 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
       <div className="absolute inset-[-1px] pointer-events-none rounded-[inherit] shadow-[inset_0px_2px_0px_0px_rgba(255,255,255,0.3)]" />
 
       <div className="relative flex flex-col gap-3 w-full lg:w-auto">
-        <GameTabs
-          difficulty={difficulty}
-          mode={mode}
-          disabled={isPlaying}
-          onDifficulty={actions.setDifficulty}
-          onMode={actions.setMode}
-        />
+        <div className="flex items-center justify-between gap-2">
+          <GameTabs
+            difficulty={difficulty}
+            mode={mode}
+            disabled={isPlaying}
+            onDifficulty={actions.setDifficulty}
+            onMode={actions.setMode}
+          />
+          {highScore > 0 && <HighScoreBadge highScore={highScore} />}
+        </div>
 
         <div className="relative" {...swipeHandlers}>
           <GameCanvas
@@ -101,35 +104,28 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
           )}
 
           {status === 'idle' && (
-            <>
-              {highScore > 0 && (
-                <div className="absolute top-3 right-3 sm:top-6 sm:right-6 pointer-events-none">
-                  <HighScoreBadge highScore={highScore} />
-                </div>
-              )}
-              <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2">
-                <button
-                  onClick={handleStartClick}
-                  className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm focus-visible:outline-2 focus-visible:outline-[#f8fafc] focus-visible:outline-offset-2"
-                >
-                  iniciar
-                </button>
-              </div>
-            </>
+            <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2">
+              <button
+                onClick={handleStartClick}
+                className="bg-[#ffb86a] hover:bg-[#ffb86a]/90 transition-colors px-6 py-2.5 rounded-lg font-['Fira_Code',sans-serif] font-[450] text-[#020618] text-sm focus-visible:outline-2 focus-visible:outline-[#f8fafc] focus-visible:outline-offset-2"
+              >
+                iniciar
+              </button>
+            </div>
           )}
 
         </div>
       </div>
 
-      <div className="flex flex-col items-end justify-between w-full lg:w-[180px] gap-6">
-        <div className="flex flex-col gap-6 w-full">
+      <div className="flex flex-col items-end justify-between w-full lg:w-[150px] gap-4">
+        <div className="flex flex-col gap-4 w-full">
           <GameControls status={status} onDirection={handleDirectionClick} />
           <ScoreDisplay score={score} mode={mode} combo={combo} lastEatTime={lastEatTime} />
         </div>
 
         <button
           onClick={actions.resetGame}
-          className="border border-[#f8fafc] hover:bg-[#f8fafc]/10 transition-colors px-3 py-2.5 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm w-full focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
+          className="border border-[#f8fafc] hover:bg-[#f8fafc]/10 transition-colors px-3 py-2 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-xs w-full focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
         >
           pular
         </button>
