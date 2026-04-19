@@ -28,7 +28,10 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
 
       <div className="flex flex-col gap-1.5 items-center mt-2">
         <button
-          onClick={() => onDirection('UP')}
+          onPointerDown={(e) => {
+            e.preventDefault();
+            onDirection('UP');
+          }}
           disabled={disabled}
           aria-label="Cima"
           className={buttonClass}
@@ -41,7 +44,10 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
           {ROW_BUTTONS.map(({ direction, rotation }) => (
             <button
               key={direction}
-              onClick={() => onDirection(direction)}
+              onPointerDown={(e) => {
+                e.preventDefault();
+                onDirection(direction);
+              }}
               disabled={disabled}
               aria-label={direction.toLowerCase()}
               className={buttonClass}
