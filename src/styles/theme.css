@@ -54,6 +54,67 @@
   animation: tab-fade-in 0.2s ease-out;
 }
 
+@keyframes snake-shake {
+  0%, 100% { transform: translate(0, 0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(2px, -1px); }
+  60% { transform: translate(-1px, 2px); }
+  80% { transform: translate(1px, -2px); }
+}
+
+.snake-shake {
+  animation: snake-shake 0.18s ease-in-out;
+}
+
+@keyframes snake-food-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+.snake-food-pulse {
+  animation: snake-food-pulse 1.2s ease-in-out infinite;
+  transform-box: fill-box;
+}
+
+@keyframes snake-particle-burst {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--px, 0), var(--py, 0)) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.snake-particle {
+  animation-name: snake-particle-burst;
+  animation-timing-function: ease-out;
+  animation-fill-mode: forwards;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes combo-pop {
+  0% { transform: scale(0.7); opacity: 0; }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.combo-pop {
+  animation: combo-pop 0.25s ease-out;
+}
+
+@keyframes countdown-pop {
+  0% { transform: scale(0.4); opacity: 0; }
+  40% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.countdown-pop {
+  animation: countdown-pop 0.3s ease-out;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -64,7 +125,10 @@
     scroll-behavior: auto !important;
   }
 
-  .animate-tab-fade-in {
+  .animate-tab-fade-in,
+  .snake-shake,
+  .snake-food-pulse,
+  .snake-particle {
     animation: none;
   }
 }
