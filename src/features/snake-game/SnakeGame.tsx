@@ -12,6 +12,7 @@ import { GameTabs } from './components/GameTabs';
 import { HighScoreBadge } from './components/HighScoreBadge';
 import { Countdown } from './components/Countdown';
 import { PauseOverlay } from './components/PauseOverlay';
+import { FoodLegend } from './components/FoodLegend';
 import { useSwipe } from './hooks/useSwipe';
 
 interface SnakeGameProps {
@@ -53,7 +54,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
 
   return (
     <div
-      className={`backdrop-blur-[32px] content-stretch flex flex-col lg:flex-row gap-4 sm:gap-8 items-start p-4 sm:p-6 relative rounded-lg min-w-0 max-w-full ${className}`}
+      className={`backdrop-blur-[32px] content-stretch flex flex-col lg:flex-row gap-4 sm:gap-6 items-start p-4 sm:p-5 relative rounded-lg min-w-0 max-w-full ${className}`}
       style={{
         backgroundImage:
           'linear-gradient(152.11deg, rgba(52, 3, 78, 0.7) 1.7049%, rgba(33, 2, 60, 0.09) 81.819%)',
@@ -70,7 +71,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
 
       <div className="absolute inset-[-1px] pointer-events-none rounded-[inherit] shadow-[inset_0px_2px_0px_0px_rgba(255,255,255,0.3)]" />
 
-      <div className="relative flex flex-col gap-3 w-full lg:w-auto">
+      <div className="relative flex flex-col gap-3 w-full lg:w-auto min-w-0">
         <div className="flex items-center justify-between gap-2 pl-2 sm:pl-4">
           <GameTabs
             difficulty={difficulty}
@@ -115,15 +116,13 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
         </div>
       </div>
 
-      <div className="flex flex-col items-end justify-between w-full lg:w-[150px] gap-4">
-        <div className="flex flex-col gap-4 w-full">
-          <GameControls status={status} onDirection={handleDirectionClick} />
-          <ScoreDisplay score={score} mode={mode} combo={combo} lastEatTime={lastEatTime} />
-        </div>
-
+      <div className="flex flex-col w-full lg:w-[140px] lg:shrink-0 gap-3 lg:self-stretch lg:justify-center">
+        <GameControls status={status} onDirection={handleDirectionClick} />
+        <ScoreDisplay score={score} mode={mode} combo={combo} lastEatTime={lastEatTime} />
         <button onClick={actions.resetGame} className="snake-btn snake-btn-ghost snake-btn-compact w-full">
           pular
         </button>
+        <FoodLegend />
       </div>
     </div>
   );

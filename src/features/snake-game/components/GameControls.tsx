@@ -18,15 +18,15 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
   const disabled = status !== 'playing';
 
   const buttonClass =
-    'snake-arrow-btn w-11 h-11 sm:w-10 sm:h-10 flex items-center justify-center';
+    'snake-arrow-btn w-10 h-10 sm:w-9 sm:h-9 flex items-center justify-center';
 
   return (
-    <div className="bg-[#1d293d] rounded-lg p-3">
-      <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-xs leading-tight">
-        // use teclado ou swipe
+    <div className="bg-[#1d293d] rounded-lg p-2.5">
+      <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-[11px] leading-tight">
+        // teclado ou swipe
       </p>
 
-      <div className="flex flex-col gap-1.5 items-center mt-3">
+      <div className="flex flex-col gap-1.5 items-center mt-2">
         <button
           onClick={() => onDirection('UP')}
           disabled={disabled}

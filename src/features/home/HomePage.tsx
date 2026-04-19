@@ -7,8 +7,8 @@ const SnakeGame = lazy(() =>
 export function HomePage() {
   return (
     <div className="min-h-full relative">
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-10">
+        <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-10 items-center">
           <div className="space-y-8 lg:space-y-12">
             <div className="space-y-4">
               <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-lg">
@@ -44,7 +44,7 @@ export function HomePage() {
             </div>
           </div>
 
-          <div className="flex justify-end min-w-0">
+          <div className="hidden lg:flex justify-end min-w-0">
             <Suspense fallback={<div className="w-full" />}>
               <SnakeGame className="w-full" />
             </Suspense>
