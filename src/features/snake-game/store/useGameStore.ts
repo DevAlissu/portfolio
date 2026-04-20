@@ -113,7 +113,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   directionQueue: [],
   food: generateRandomFood(INITIAL_SNAKE),
   gridSize: GRID_SIZE,
-  difficulty: 'easy' as Difficulty,
+  difficulty: 'normal' as Difficulty,
   mode: 'casual' as GameMode,
   leaderboard: getStoredLeaderboard(),
   combo: 0,
