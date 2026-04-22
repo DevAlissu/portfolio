@@ -22,6 +22,7 @@ import {
   PARTICLE_LIFETIME_MS,
   MAX_DIRECTION_QUEUE,
 } from '../constants';
+import { trackEvent } from '../../../shared/services/analytics';
 
 function pickFoodType(): FoodType {
   const totalWeight = Object.values(FOOD_TYPES).reduce((s, t) => s + t.weight, 0);
@@ -134,6 +135,8 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   beginCountdown: () => {
+    const { difficulty, mode } = get();
+    trackEvent('snake-start', { difficulty, mode });
     set({
       status: 'countdown',
       score: 0,
@@ -166,9 +169,10 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   gameOver: () => {
-    const { score, highScore, shakeKey } = get();
+    const { score, highScore, shakeKey, difficulty, mode } = get();
     const newHighScore = Math.max(score, highScore);
     if (newHighScore > highScore) saveHighScore(newHighScore);
+    trackEvent('snake-game-over', { score, difficulty, mode });
     set({ status: 'game-over', highScore: newHighScore, combo: 0, shakeKey: shakeKey + 1 });
   },
 
@@ -228,7 +232,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
   },
 
   moveSnake: () => {
-    const { snake, direction, directionQueue, food, status, mode, combo, lastEatTime, particles, shakeKey } = get();
+    const { snake, direction, directionQueue, food, status, mode, difficulty, combo, lastEatTime, particles, shakeKey } = get();
     if (status !== 'playing') return;
 
     let currentDirection = direction;
@@ -293,6 +297,7 @@ export const useGameStore = create<GameStore>((set, get) => ({
       if (!newFood || (mode === 'casual' && newScore >= FOOD_TO_WIN_CASUAL)) {
         const newHighScore = Math.max(newScore, highScore);
         if (newHighScore > highScore) saveHighScore(newHighScore);
+        trackEvent('snake-victory', { score: newScore, difficulty });
         set({
           ...dirUpdate,
           status: 'victory',
