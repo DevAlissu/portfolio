@@ -83,7 +83,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
           {mode === 'competitive' && highScore > 0 && <HighScoreBadge highScore={highScore} />}
         </div>
 
-        <div className="relative" {...swipeHandlers}>
+        <div className="relative pl-2 sm:pl-4" {...swipeHandlers}>
           <GameCanvas
             food={food}
             gridSize={gridSize}

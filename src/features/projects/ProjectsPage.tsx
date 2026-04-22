@@ -1,13 +1,19 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useProjectFilter } from './hooks/useProjectFilter';
 import { TechFilter } from './components/TechFilter';
 import { ProjectCard } from './components/ProjectCard';
 import { ProjectModal } from './components/ProjectModal';
 import type { Project } from './types';
+import { trackEvent } from '../../shared/services/analytics';
 
 export function ProjectsPage() {
   const { selectedTech, toggleTech, filteredProjects } = useProjectFilter();
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  const handleSelect = useCallback((project: Project) => {
+    trackEvent('project-open', { id: project.id, title: project.title });
+    setSelectedProject(project);
+  }, []);
 
   return (
     <div className="h-full flex flex-col lg:flex-row min-w-0">
@@ -27,7 +33,7 @@ export function ProjectsPage() {
               key={project.id}
               project={project}
               index={i}
-              onSelect={setSelectedProject}
+              onSelect={handleSelect}
             />
           ))}
         </div>

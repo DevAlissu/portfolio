@@ -1,8 +1,22 @@
 import { lazy, Suspense } from 'react';
+import { TypeAnimation } from 'react-type-animation';
 
 const SnakeGame = lazy(() =>
   import('../snake-game').then((m) => ({ default: m.SnakeGame })),
 );
+
+const ROLES = [
+  'Front-end developer',
+  2000,
+  'Back-end developer',
+  2000,
+  'Full-Stack developer',
+  2000,
+  'Mobile developer',
+  2000,
+  'IoT developer',
+  2000,
+];
 
 export function HomePage() {
   return (
@@ -16,10 +30,17 @@ export function HomePage() {
               </p>
               <h1 className="space-y-2">
                 <div className="text-5xl sm:text-6xl text-[#f8fafc] font-normal">Alissu</div>
-                <div className="text-2xl sm:text-3xl text-[#b14eff] font-normal">
-                  <span className="font-['Fira_Code',sans-serif]">{`> Front-end developer `}</span>
-                  <span className="font-['Buenard',serif]">{`&&`}</span>
-                  <span className="font-['Fira_Code',sans-serif]">{` Full-Stack developer`}</span>
+                <div className="text-2xl sm:text-3xl text-[#b14eff] font-normal font-['Fira_Code',sans-serif] min-h-[1.5em]">
+                  <span aria-hidden="true">&gt; </span>
+                  <TypeAnimation
+                    sequence={ROLES}
+                    wrapper="span"
+                    speed={55}
+                    deletionSpeed={70}
+                    cursor
+                    repeat={Infinity}
+                    aria-label="Front-end developer, Back-end developer, Full-Stack developer, Mobile developer, IoT developer"
+                  />
                 </div>
               </h1>
             </div>

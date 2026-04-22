@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { ContactFormData, ContactFormErrors, ContactFormStatus } from '../types';
+import { trackEvent } from '../../../shared/services/analytics';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -42,6 +43,7 @@ export function useContactForm() {
       return;
     }
 
+    trackEvent('contact-submit');
     setFormStatus('success');
     setFormErrors({});
   };
