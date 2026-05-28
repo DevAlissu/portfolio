@@ -213,3 +213,5 @@ Transicao entre paginas com efeito reveal via `clip-path` (200ms).
 [![GitHub](https://img.shields.io/badge/@devalissu-181717?style=flat-square&logo=github)](https://github.com/devalissu)
 [![LinkedIn](https://img.shields.io/badge/alisonsilvaa-0A66C2?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/alisonsilvaa/)
 [![Portfolio](https://img.shields.io/badge/alissu.dev-020618?style=flat-square&logo=googlechrome&logoColor=white)](https://alissu.dev)
+
+<!-- teste de draft review -->
