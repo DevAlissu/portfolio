@@ -1,12 +1,40 @@
-import { useState, useMemo } from 'react';
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router';
 import { PROJECTS } from '../constants';
 
 export function useProjectFilter() {
-  const [selectedTech, setSelectedTech] = useState<string[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const techParam = searchParams.get('tech');
+
+  const selectedTech = useMemo(
+    () => (techParam ? techParam.split(',').filter(Boolean) : []),
+    [techParam],
+  );
 
   const toggleTech = (tech: string) => {
-    setSelectedTech((prev) =>
-      prev.includes(tech) ? prev.filter((t) => t !== tech) : [...prev, tech],
+    setSearchParams(
+      (prev) => {
+        const list = (prev.get('tech') || '').split(',').filter(Boolean);
+        const nextList = list.includes(tech)
+          ? list.filter((t) => t !== tech)
+          : [...list, tech];
+        const next = new URLSearchParams(prev);
+        if (nextList.length) next.set('tech', nextList.join(','));
+        else next.delete('tech');
+        return next;
+      },
+      { replace: true },
+    );
+  };
+
+  const clearTech = () => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('tech');
+        return next;
+      },
+      { replace: true },
     );
   };
 
@@ -17,5 +45,5 @@ export function useProjectFilter() {
     );
   }, [selectedTech]);
 
-  return { selectedTech, toggleTech, filteredProjects };
+  return { selectedTech, toggleTech, clearTech, filteredProjects };
 }
