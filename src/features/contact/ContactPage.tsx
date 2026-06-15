@@ -5,8 +5,16 @@ import { CodePreview } from './components/CodePreview';
 import { ContactSidebar } from './components/ContactSidebar';
 
 export function ContactPage() {
-  const { formData, formStatus, formErrors, handleChange, handleSubmit, handleNewMessage } =
-    useContactForm();
+  const {
+    formData,
+    formStatus,
+    formErrors,
+    submitError,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleNewMessage,
+  } = useContactForm();
 
   const currentDate = new Date().toLocaleDateString('pt-BR', {
     weekday: 'short',
@@ -26,7 +34,10 @@ export function ContactPage() {
             <ContactForm
               formData={formData}
               formErrors={formErrors}
+              formStatus={formStatus}
+              submitError={submitError}
               onChange={handleChange}
+              onBlur={handleBlur}
               onSubmit={handleSubmit}
             />
           )}
