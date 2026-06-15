@@ -123,7 +123,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   className={`w-full h-auto ${imgMaxH} object-contain group-hover/img:brightness-110 transition-all`}
                 />
                 {allImages.length > 1 && (
-                  <div className="absolute bottom-2 right-2 font-['Fira_Code',sans-serif] text-[10px] text-white/70 bg-black/50 px-2 py-0.5 rounded">
+                  <div className="absolute bottom-2 right-2 font-['Fira_Code',sans-serif] text-[10px] text-white/70 bg-black/50 px-2 py-0.5 rounded tabular-nums">
                     {activeSlide + 1} / {allImages.length}
                   </div>
                 )}

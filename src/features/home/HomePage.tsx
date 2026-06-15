@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { TypeAnimation } from 'react-type-animation';
+import { useReducedMotion } from '../../shared/hooks/useReducedMotion';
 
 const SnakeGame = lazy(() =>
   import('../snake-game').then((m) => ({ default: m.SnakeGame })),
@@ -19,6 +20,8 @@ const ROLES = [
 ];
 
 export function HomePage() {
+  const reducedMotion = useReducedMotion();
+
   return (
     <div className="min-h-full relative">
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-10">
@@ -32,21 +35,25 @@ export function HomePage() {
                 <div className="text-5xl sm:text-6xl text-[#f8fafc] font-normal">Alissu</div>
                 <div className="text-2xl sm:text-3xl text-[#b14eff] font-normal font-['Fira_Code',sans-serif] min-h-[1.5em]">
                   <span aria-hidden="true">&gt; </span>
-                  <TypeAnimation
-                    sequence={ROLES}
-                    wrapper="span"
-                    speed={55}
-                    deletionSpeed={70}
-                    cursor
-                    repeat={Infinity}
-                    aria-label="Front-end developer, Back-end developer, Full-Stack developer, Mobile developer, IoT developer"
-                  />
+                  {reducedMotion ? (
+                    <span>Full-Stack developer</span>
+                  ) : (
+                    <TypeAnimation
+                      sequence={ROLES}
+                      wrapper="span"
+                      speed={55}
+                      deletionSpeed={70}
+                      cursor
+                      repeat={Infinity}
+                      aria-label="Front-end developer, Back-end developer, Full-Stack developer, Mobile developer, IoT developer"
+                    />
+                  )}
                 </div>
               </h1>
             </div>
 
             <div className="space-y-2 font-['Fira_Code',sans-serif] text-base">
-              <p className="text-[#90a1b9]">{`// complete o jogo para continuar`}</p>
+              <p className="hidden lg:block text-[#90a1b9]">{`// complete o jogo para continuar`}</p>
               <p className="text-[#90a1b9]">{`// Meu perfil no Github:`}</p>
               <p className="text-[#f8fafc]">
                 <span className="text-[#9d4edd]">const</span>

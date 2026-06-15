@@ -23,7 +23,7 @@ export const ScoreDisplay = memo(function ScoreDisplay({
         <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm mb-1">
           // pontuacao
         </p>
-        <p className="font-['Fira_Code',sans-serif] text-[#43D9AD] text-2xl font-bold">
+        <p className="font-['Fira_Code',sans-serif] text-[#43D9AD] text-2xl font-bold tabular-nums">
           {score}
         </p>
         <div className="h-8 mt-2">

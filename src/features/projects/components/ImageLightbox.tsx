@@ -44,7 +44,7 @@ export function ImageLightbox({ images, startIndex, onClose }: ImageLightboxProp
         <X size={24} />
       </button>
 
-      <div className="absolute top-4 left-1/2 -translate-x-1/2 font-['Fira_Code',sans-serif] text-white/50 text-sm z-10">
+      <div className="absolute top-4 left-1/2 -translate-x-1/2 font-['Fira_Code',sans-serif] text-white/50 text-sm z-10 tabular-nums">
         {index + 1} / {images.length}
       </div>
 
