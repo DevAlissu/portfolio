@@ -10,4 +10,4 @@ export interface ContactFormErrors {
   message?: string;
 }
 
-export type ContactFormStatus = 'idle' | 'error' | 'success';
+export type ContactFormStatus = 'idle' | 'submitting' | 'error' | 'success';

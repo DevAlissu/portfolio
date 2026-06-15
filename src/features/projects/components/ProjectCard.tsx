@@ -64,7 +64,7 @@ export const ProjectCard = memo(function ProjectCard({ project, index, onSelect 
               </span>
             ))}
             {project.technologies.length > 4 && (
-              <span className="font-['Fira_Code',sans-serif] text-[10px] text-[#607088] px-1.5 py-0.5">
+              <span className="font-['Fira_Code',sans-serif] text-[10px] text-[#90a1b9] px-1.5 py-0.5">
                 +{project.technologies.length - 4}
               </span>
             )}

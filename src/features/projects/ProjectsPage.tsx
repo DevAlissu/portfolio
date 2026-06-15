@@ -1,19 +1,45 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
+import { useSearchParams } from 'react-router';
 import { useProjectFilter } from './hooks/useProjectFilter';
 import { TechFilter } from './components/TechFilter';
 import { ProjectCard } from './components/ProjectCard';
 import { ProjectModal } from './components/ProjectModal';
+import { PROJECTS } from './constants';
 import type { Project } from './types';
 import { trackEvent } from '../../shared/services/analytics';
 
 export function ProjectsPage() {
-  const { selectedTech, toggleTech, filteredProjects } = useProjectFilter();
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const { selectedTech, toggleTech, clearTech, filteredProjects } = useProjectFilter();
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSelect = useCallback((project: Project) => {
-    trackEvent('project-open', { id: project.id, title: project.title });
-    setSelectedProject(project);
-  }, []);
+  const selectedId = searchParams.get('p');
+  const selectedProject = selectedId
+    ? PROJECTS.find((p) => String(p.id) === selectedId) ?? null
+    : null;
+
+  const handleSelect = useCallback(
+    (project: Project) => {
+      trackEvent('project-open', { id: project.id, title: project.title });
+      // push: deixa o botao "voltar" do navegador fechar o modal
+      setSearchParams((prev) => {
+        const next = new URLSearchParams(prev);
+        next.set('p', String(project.id));
+        return next;
+      });
+    },
+    [setSearchParams],
+  );
+
+  const handleClose = useCallback(() => {
+    setSearchParams(
+      (prev) => {
+        const next = new URLSearchParams(prev);
+        next.delete('p');
+        return next;
+      },
+      { replace: true },
+    );
+  }, [setSearchParams]);
 
   return (
     <div className="h-full flex flex-col lg:flex-row min-w-0">
@@ -23,7 +49,15 @@ export function ProjectsPage() {
         <div className="border-b lg:border-l border-[#314158] px-6 py-3">
           <div className="flex items-center gap-2 text-[#90a1b9] font-['Fira_Code',sans-serif] text-[14px]">
             {selectedTech.length > 0 ? selectedTech.join('; ') : 'todos'}
-            <button className="ml-2 hover:text-[#f8fafc] transition-colors">&times;</button>
+            {selectedTech.length > 0 && (
+              <button
+                onClick={clearTech}
+                aria-label="Limpar filtros"
+                className="ml-2 hover:text-[#f8fafc] transition-colors focus-visible:outline-2 focus-visible:outline-[#ffb86a] rounded"
+              >
+                &times;
+              </button>
+            )}
           </div>
         </div>
 
@@ -48,10 +82,7 @@ export function ProjectsPage() {
       </main>
 
       {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
+        <ProjectModal project={selectedProject} onClose={handleClose} />
       )}
     </div>
   );

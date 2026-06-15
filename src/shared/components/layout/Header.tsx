@@ -44,7 +44,7 @@ export function Header() {
         <div className="hidden md:flex items-center shrink-0">
           <Link
             to={CONTACT_NAV.path}
-            className={`px-3 lg:px-6 xl:px-8 py-4 border-l border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-xs lg:text-sm xl:text-base transition-colors whitespace-nowrap ${
+            className={`relative px-3 lg:px-6 xl:px-8 py-4 border-l border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-xs lg:text-sm xl:text-base transition-colors whitespace-nowrap ${
               isActive(CONTACT_NAV.path)
                 ? 'text-[#f8fafc]'
                 : 'text-[#90a1b9] hover:text-[#f8fafc]'

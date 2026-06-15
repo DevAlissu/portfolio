@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { Header } from './Header';
 import { Footer } from './Footer';
@@ -6,6 +6,17 @@ import { CodeRain } from '../decorative/CodeRain';
 
 export function Layout() {
   const location = useLocation();
+  const mainRef = useRef<HTMLElement>(null);
+  const isFirstRender = useRef(true);
+
+  // move o foco para o conteudo principal ao trocar de rota (leitores de tela)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    mainRef.current?.focus({ preventScroll: true });
+  }, [location.pathname]);
 
   return (
     <div className="h-dvh flex flex-col bg-[#020618] relative overflow-hidden">
@@ -21,13 +32,28 @@ export function Layout() {
 
       <div className="relative z-10 flex flex-col h-full min-h-0">
         <Header />
-        <main key={location.pathname} className="flex-1 min-h-0 overflow-auto animate-tab-fade-in">
-          <Suspense fallback={null}>
+        <main
+          ref={mainRef}
+          key={location.pathname}
+          tabIndex={-1}
+          className="flex-1 min-h-0 overflow-auto animate-tab-fade-in outline-none"
+        >
+          <Suspense fallback={<PageFallback />}>
             <Outlet />
           </Suspense>
         </main>
         <Footer />
       </div>
+    </div>
+  );
+}
+
+function PageFallback() {
+  return (
+    <div className="h-full flex items-center justify-center" role="status" aria-live="polite">
+      <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-base animate-pulse">
+        // carregando...
+      </p>
     </div>
   );
 }

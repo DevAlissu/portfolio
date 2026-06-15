@@ -18,7 +18,7 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
   const disabled = status !== 'playing';
 
   const buttonClass =
-    'snake-arrow-btn w-10 h-10 sm:w-9 sm:h-9 flex items-center justify-center';
+    'snake-arrow-btn w-11 h-11 flex items-center justify-center';
 
   return (
     <div className="bg-[#1d293d] rounded-lg p-2.5">
