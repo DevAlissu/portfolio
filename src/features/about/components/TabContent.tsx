@@ -16,7 +16,7 @@ export function TabContent({ content }: TabContentProps) {
           <div className="space-y-4">
             <h3 className="text-[#f8fafc] text-lg">/**</h3>
             {content.lines.map((line, i) => (
-              <p key={i} className="text-[#90a1b9] leading-relaxed">
+              <p key={i} className="text-[#aeb9d0] leading-relaxed">
                 {line}
               </p>
             ))}
@@ -26,8 +26,8 @@ export function TabContent({ content }: TabContentProps) {
       )}
       {content.format === 'list' && (
         <div className="space-y-4">
-          <p className="text-[#90a1b9] leading-relaxed">{content.title}</p>
-          <ul className="space-y-2 text-[#90a1b9]">
+          <p className="text-[#aeb9d0] leading-relaxed">{content.title}</p>
+          <ul className="space-y-2 text-[#aeb9d0]">
             {content.lines.map((line, i) => (
               <li key={i}>{`\u2022 ${line}`}</li>
             ))}
@@ -36,9 +36,9 @@ export function TabContent({ content }: TabContentProps) {
       )}
       {content.format === 'text' && (
         <div className="space-y-4">
-          <p className="text-[#90a1b9] leading-relaxed">{content.title}</p>
+          <p className="text-[#aeb9d0] leading-relaxed">{content.title}</p>
           {content.lines.map((line, i) => (
-            <p key={i} className="text-[#90a1b9] leading-relaxed">
+            <p key={i} className="text-[#aeb9d0] leading-relaxed">
               {line}
             </p>
           ))}

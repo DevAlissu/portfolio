@@ -226,9 +226,9 @@ export const SIDEBAR_SECTIONS: SidebarFolder[] = [
         label: "formacao",
         iconColor: "#ad46ff",
         files: [
-          { key: "high-school", label: "ensino-medio", iconColor: "#90a1b9" },
-          { key: "university", label: "universidade", iconColor: "#90a1b9" },
-          { key: "capacitacoes", label: "capacitacoes", iconColor: "#90a1b9" },
+          { key: "high-school", label: "ensino-medio", iconColor: "#aeb9d0" },
+          { key: "university", label: "universidade", iconColor: "#aeb9d0" },
+          { key: "capacitacoes", label: "capacitacoes", iconColor: "#aeb9d0" },
         ],
       },
     ],

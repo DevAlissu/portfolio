@@ -18,15 +18,15 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
   const disabled = status !== 'playing';
 
   const buttonClass =
-    'snake-arrow-btn w-11 h-11 flex items-center justify-center';
+    'snake-arrow-btn w-10 h-10 flex items-center justify-center';
 
   return (
-    <div className="bg-[#1d293d] rounded-lg p-2.5">
+    <div className="bg-[#06000a] rounded-lg p-3">
       <p className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-[11px] leading-tight">
         // teclado ou swipe
       </p>
 
-      <div className="flex flex-col gap-1.5 items-center mt-2">
+      <div className="flex flex-col gap-2 items-center mt-2">
         <button
           onPointerDown={(e) => {
             e.preventDefault();
@@ -40,7 +40,7 @@ export const GameControls = memo(function GameControls({ status, onDirection }: 
             <path d={ARROW_PATH} fill="#F8FAFC" />
           </svg>
         </button>
-        <div className="flex gap-1.5">
+        <div className="flex gap-2">
           {ROW_BUTTONS.map(({ direction, rotation }) => (
             <button
               key={direction}

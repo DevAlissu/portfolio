@@ -65,7 +65,7 @@ export function TechFilter({ selectedTech, onToggle }: TechFilterProps) {
                     <div key={sub.label}>
                       <button
                         onClick={() => toggleSub(sub.label)}
-                        className="flex items-center gap-2 w-full text-left py-1 text-[#90a1b9] hover:text-[#f8fafc] transition-colors font-['Fira_Code',sans-serif] text-xs"
+                        className="flex items-center gap-2 w-full text-left py-1 text-[#aeb9d0] hover:text-[#f8fafc] transition-colors font-['Fira_Code',sans-serif] text-xs"
                       >
                         {isSubOpen ? (
                           <ChevronDown size={12} />
@@ -102,7 +102,7 @@ export function TechFilter({ selectedTech, onToggle }: TechFilterProps) {
   return (
     <>
       {/* Mobile: inline collapsible */}
-      <div className="lg:hidden border-b border-[#314158] bg-[#020618]">
+      <div className="lg:hidden border-b border-[#314158] bg-[#06000a]">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="w-full px-6 py-3 flex items-center gap-3 hover:bg-[#1d293d]/20 transition-colors"
@@ -157,7 +157,7 @@ function TechCheckbox({
           onChange={() => onToggle(tech)}
           className="peer sr-only"
         />
-        <div className="w-3.5 h-3.5 border border-[#62748E] rounded-sm bg-[#020618] peer-checked:bg-[#62748E] peer-checked:border-[#62748E] transition-colors flex items-center justify-center">
+        <div className="w-3.5 h-3.5 border border-[#62748E] rounded-sm bg-[#06000a] peer-checked:bg-[#62748E] peer-checked:border-[#62748E] transition-colors flex items-center justify-center">
           <svg
             className="w-2 h-2 text-[#020618] opacity-0 peer-checked:opacity-100"
             viewBox="0 0 12 12"
@@ -174,7 +174,7 @@ function TechCheckbox({
         </div>
       </div>
       {TECH_ICONS[tech] ?? null}
-      <span className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[12px] group-hover:text-[#f8fafc] transition-colors">
+      <span className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[12px] group-hover:text-[#f8fafc] transition-colors">
         {tech}
       </span>
     </label>

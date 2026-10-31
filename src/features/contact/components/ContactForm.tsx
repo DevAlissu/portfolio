@@ -11,7 +11,7 @@ interface ContactFormProps {
 }
 
 const baseField =
-  "w-full bg-[#020618] rounded-lg px-3 py-3 font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px] focus:outline-none transition-colors";
+  "w-full bg-[#06000a] rounded-lg px-3 py-3 font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px] focus:outline-none transition-colors";
 
 function borderClass(hasError: boolean, hasValue: boolean) {
   if (hasError) return 'border border-[#ff6b6b]';
@@ -35,7 +35,7 @@ export function ContactForm({
       <div className="space-y-2">
         <label
           htmlFor="contact-name"
-          className="block font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]"
+          className="block font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]"
         >
           _nome:
         </label>
@@ -67,7 +67,7 @@ export function ContactForm({
       <div className="space-y-2">
         <label
           htmlFor="contact-email"
-          className="block font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]"
+          className="block font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]"
         >
           _email:
         </label>
@@ -110,7 +110,7 @@ export function ContactForm({
       <div className="space-y-2">
         <label
           htmlFor="contact-message"
-          className="block font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]"
+          className="block font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]"
         >
           _mensagem:
         </label>

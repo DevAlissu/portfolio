@@ -47,7 +47,7 @@ export function ProjectsPage() {
 
       <main className="flex-1 min-w-0 overflow-auto">
         <div className="border-b lg:border-l border-[#314158] px-6 py-3">
-          <div className="flex items-center gap-2 text-[#90a1b9] font-['Fira_Code',sans-serif] text-[14px]">
+          <div className="flex items-center gap-2 text-[#aeb9d0] font-['Fira_Code',sans-serif] text-[14px]">
             {selectedTech.length > 0 ? selectedTech.join('; ') : 'todos'}
             {selectedTech.length > 0 && (
               <button
@@ -74,7 +74,7 @@ export function ProjectsPage() {
 
         {filteredProjects.length === 0 && (
           <div className="flex items-center justify-center h-64">
-            <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]">
+            <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]">
               // Nenhum projeto encontrado com os filtros selecionados
             </p>
           </div>

@@ -8,7 +8,7 @@ export function ContactSuccess({ onNewMessage }: ContactSuccessProps) {
       <h2 className="font-['Fira_Code',sans-serif] text-[#f8fafc] text-2xl flex items-center gap-2 justify-center">
         Obrigado!
       </h2>
-      <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]">
+      <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]">
         Sua mensagem foi enviada com sucesso.
         <br />
         Voce recebera uma resposta em breve!

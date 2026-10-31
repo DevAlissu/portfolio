@@ -72,7 +72,7 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
       <div className="absolute inset-[-1px] pointer-events-none rounded-[inherit] shadow-[inset_0px_2px_0px_0px_rgba(255,255,255,0.3)]" />
 
       <div className="relative flex flex-col gap-3 w-full lg:w-auto min-w-0">
-        <div className="flex items-center justify-between gap-2 pl-2 sm:pl-4">
+        <div className="flex items-center gap-2 pl-2 sm:pl-4">
           <GameTabs
             difficulty={difficulty}
             mode={mode}
@@ -80,7 +80,6 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
             onDifficulty={actions.setDifficulty}
             onMode={actions.setMode}
           />
-          {mode === 'competitive' && highScore > 0 && <HighScoreBadge highScore={highScore} />}
         </div>
 
         <div className="relative pl-2 sm:pl-4" {...swipeHandlers}>
@@ -89,36 +88,39 @@ export function SnakeGame({ className = '' }: SnakeGameProps) {
             gridSize={gridSize}
             particles={particles}
             shakeKey={shakeKey}
-          />
-          <GameOverlay
-            status={status}
-            score={score}
-            mode={mode}
-            leaderboard={leaderboard}
-            onStart={handleStartClick}
-            onSaveScore={actions.saveToLeaderboard}
-          />
+          >
+            <GameOverlay
+              status={status}
+              score={score}
+              mode={mode}
+              leaderboard={leaderboard}
+              onStart={handleStartClick}
+              onSaveScore={actions.saveToLeaderboard}
+            />
 
-          {status === 'countdown' && <Countdown onFinish={actions.startGame} />}
+            {status === 'countdown' && <Countdown onFinish={actions.startGame} />}
 
-          {status === 'paused' && (
-            <PauseOverlay onResume={actions.resumeGame} onQuit={actions.resetGame} />
-          )}
+            {status === 'paused' && (
+              <PauseOverlay onResume={actions.resumeGame} onQuit={actions.resetGame} />
+            )}
 
-          {status === 'idle' && (
-            <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2">
-              <button onClick={handleStartClick} className="snake-btn snake-btn-primary">
-                iniciar
-              </button>
-            </div>
-          )}
-
+            {status === 'idle' && (
+              <div className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2">
+                <button onClick={handleStartClick} className="snake-btn snake-btn-primary">
+                  iniciar
+                </button>
+              </div>
+            )}
+          </GameCanvas>
         </div>
       </div>
 
-      <div className="flex flex-col w-full lg:w-[140px] lg:shrink-0 gap-3 lg:self-stretch lg:justify-center">
+      <div className="flex flex-col w-full lg:w-[168px] lg:shrink-0 gap-3 lg:self-stretch lg:justify-center">
         <GameControls status={status} onDirection={handleDirectionClick} />
         <ScoreDisplay score={score} mode={mode} combo={combo} lastEatTime={lastEatTime} />
+        {mode === 'competitive' && highScore > 0 && (
+          <HighScoreBadge highScore={highScore} />
+        )}
         <button onClick={actions.resetGame} className="snake-btn snake-btn-ghost snake-btn-compact w-full">
           pular
         </button>

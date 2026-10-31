@@ -1,4 +1,4 @@
-import { memo, useRef, useEffect } from 'react';
+import { memo, useRef, useEffect, type ReactNode } from 'react';
 import type { Position, Food, Particle } from '../types';
 import { useGameStore } from '../store/useGameStore';
 import { gridToSvg, getSnakeDimensions } from '../utils/grid';
@@ -9,9 +9,10 @@ interface GameCanvasProps {
   gridSize: number;
   particles: Particle[];
   shakeKey: number;
+  children?: ReactNode;
 }
 
-export const GameCanvas = memo(function GameCanvas({ food, gridSize, particles, shakeKey }: GameCanvasProps) {
+export const GameCanvas = memo(function GameCanvas({ food, gridSize, particles, shakeKey, children }: GameCanvasProps) {
   const pathRef = useRef<SVGPathElement>(null);
   const { snakeStrokeWidth } = getSnakeDimensions(gridSize);
   const foodPos = food ? gridToSvg(food.x, food.y, gridSize) : null;
@@ -86,7 +87,7 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize, particles, 
   }, [gridSize]);
 
   return (
-    <div ref={containerRef} className="bg-[#1d293d] rounded-lg shadow-[inset_1px_5px_11px_0px_rgba(2,18,27,0.71)] p-3 sm:p-5 w-full" style={{ maxWidth: 'min(440px, calc(50vh + 40px))' }}>
+    <div ref={containerRef} className="bg-[#06000a] rounded-lg shadow-[inset_1px_5px_11px_0px_rgba(2,18,27,0.71)] p-3 sm:p-5 w-full lg:w-[min(440px,calc(50vh_+_40px))]" style={{ maxWidth: 'min(440px, calc(50vh + 40px))' }}>
       <div className="relative bg-[#0a1628] rounded-sm overflow-hidden w-full aspect-square mx-auto" style={{ maxWidth: 'min(400px, 50vh)' }}>
         <svg
           className="absolute inset-0 w-full h-full"
@@ -134,6 +135,7 @@ export const GameCanvas = memo(function GameCanvas({ food, gridSize, particles, 
             );
           })}
         </svg>
+        {children}
       </div>
     </div>
   );

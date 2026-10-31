@@ -392,7 +392,7 @@ export const TECH_CATEGORIES: TechCategory[] = [
       },
       {
         label: 'ui-utils',
-        iconColor: '#90a1b9',
+        iconColor: '#aeb9d0',
         techs: ['Framer Motion', 'React Toastify'],
       },
       {

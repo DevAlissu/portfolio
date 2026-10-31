@@ -28,7 +28,7 @@ export function HomePage() {
         <div className="grid lg:grid-cols-[1fr_auto] gap-8 lg:gap-10 items-center">
           <div className="space-y-8 lg:space-y-12">
             <div className="space-y-4">
-              <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-lg">
+              <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-lg">
                 Ola a todos!! eu sou o
               </p>
               <h1 className="space-y-2">
@@ -53,8 +53,8 @@ export function HomePage() {
             </div>
 
             <div className="space-y-2 font-['Fira_Code',sans-serif] text-base">
-              <p className="hidden lg:block text-[#90a1b9]">{`// complete o jogo para continuar`}</p>
-              <p className="text-[#90a1b9]">{`// Meu perfil no Github:`}</p>
+              <p className="hidden lg:block text-[#aeb9d0]">{`// complete o jogo para continuar`}</p>
+              <p className="text-[#aeb9d0]">{`// Meu perfil no Github:`}</p>
               <p className="text-[#f8fafc]">
                 <span className="text-[#9d4edd]">const</span>
                 {` `}

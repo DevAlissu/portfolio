@@ -12,7 +12,7 @@ export const PauseOverlay = memo(function PauseOverlay({ onResume, onQuit }: Pau
         <p className="font-['Fira_Code',sans-serif] text-[#c490f7] text-2xl font-bold">
           pausado
         </p>
-        <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-xs">
+        <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-xs">
           // pressione espaco para continuar
         </p>
         <div className="flex flex-col gap-2 items-center">

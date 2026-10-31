@@ -60,7 +60,7 @@ export const GameOverlay = memo(function GameOverlay({
 
         {showNameInput && (
           <div className="space-y-3">
-            <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-xs">
+            <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-xs">
               salve seu nome no ranking:
             </p>
             <div className="flex gap-2">
@@ -71,7 +71,7 @@ export const GameOverlay = memo(function GameOverlay({
                 onKeyDown={(e) => e.key === 'Enter' && handleSave()}
                 maxLength={20}
                 placeholder="seu nome"
-                className="bg-[#020618] border border-[#314158] rounded px-3 py-1.5 font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm focus:border-[#43D9AD] focus:outline-none w-32"
+                className="bg-[#06000a] border border-[#314158] rounded px-3 py-1.5 font-['Fira_Code',sans-serif] text-[#f8fafc] text-sm focus:border-[#43D9AD] focus:outline-none w-32"
               />
               <button
                 onClick={handleSave}
@@ -86,7 +86,7 @@ export const GameOverlay = memo(function GameOverlay({
 
         {showLeaderboard && leaderboard.length > 0 && (
           <div className="space-y-2 mt-2">
-            <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-xs">
+            <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-xs">
               // ranking
             </p>
             <div className="space-y-1 text-left">
@@ -108,7 +108,7 @@ export const GameOverlay = memo(function GameOverlay({
                   <div
                     key={`${entry.name}-${entry.date}`}
                     className={`flex items-center gap-2 font-['Fira_Code',sans-serif] text-xs px-2 py-1 rounded ${
-                      isCurrentPlayer ? 'bg-[#43D9AD]/10 text-[#43D9AD]' : 'text-[#90a1b9]'
+                      isCurrentPlayer ? 'bg-[#43D9AD]/10 text-[#43D9AD]' : 'text-[#aeb9d0]'
                     }`}
                   >
                     <span className="w-4 text-center">

@@ -7,10 +7,10 @@ export function NotFoundPage() {
         <h1 className="font-['Fira_Code',sans-serif] text-[#43D9AD] text-6xl sm:text-8xl font-bold">
           404
         </h1>
-        <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-xl sm:text-2xl">
+        <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-xl sm:text-2xl">
           // Pagina nao encontrada
         </p>
-        <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-base">
+        <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-base">
           A pagina que voce procura nao existe ou foi movida.
         </p>
         <Link

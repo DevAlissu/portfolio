@@ -25,11 +25,11 @@ export function ContactSidebar() {
           <div className="px-3 pb-3 space-y-2">
             <div className="flex items-center gap-2 px-3 py-2 text-[#62748E]">
               <Mail size={16} strokeWidth={1.8} />
-              <span className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]">{CONTACT_EMAIL}</span>
+              <span className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]">{CONTACT_EMAIL}</span>
             </div>
             <div className="flex items-center gap-2 px-3 py-2 text-[#62748E]">
               <Phone size={16} strokeWidth={1.8} />
-              <span className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]">{CONTACT_PHONE}</span>
+              <span className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]">{CONTACT_PHONE}</span>
             </div>
           </div>
         )}
@@ -66,7 +66,7 @@ export function ContactSidebar() {
               ) : (
                 <div key={social.name} className="flex items-center gap-2 px-3 py-2 text-[#62748E]">
                   <Icon width={16} height={16} />
-                  <span className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[16px]">{social.name}</span>
+                  <span className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[16px]">{social.name}</span>
                 </div>
               );
             })}

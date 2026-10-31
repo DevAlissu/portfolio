@@ -14,11 +14,11 @@ export const ProjectCard = memo(function ProjectCard({ project, index, onSelect 
       <div className="mb-4">
         <p className="font-['Fira_Code',sans-serif] text-[#9d4edd] text-[16px] mb-2">
           <span className="text-[#9d4edd]">Project {index + 1}</span>{' '}
-          <span className="text-[#90a1b9]">// {project.tag}</span>
+          <span className="text-[#aeb9d0]">// {project.tag}</span>
         </p>
       </div>
 
-      <div className="bg-[#1d293d] rounded-lg overflow-hidden border border-[#314158] group-hover:border-[#9d4edd]/50 transition-all">
+      <div className="bg-[#06000a] rounded-lg overflow-hidden border border-[#314158] group-hover:border-[#9d4edd]/50 transition-all">
         {project.image ? (
           <div className="relative h-[175px] bg-[#0a1628] overflow-hidden">
             <img src={project.image} alt={project.title} loading="lazy" width="400" height="175" className="w-full h-full object-cover object-top" />
@@ -51,7 +51,7 @@ export const ProjectCard = memo(function ProjectCard({ project, index, onSelect 
               </a>
             )}
           </div>
-          <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-[13px] leading-relaxed line-clamp-2">
+          <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-[13px] leading-relaxed line-clamp-2">
             {project.description}
           </p>
           <div className="flex flex-wrap gap-1.5">
@@ -64,14 +64,14 @@ export const ProjectCard = memo(function ProjectCard({ project, index, onSelect 
               </span>
             ))}
             {project.technologies.length > 4 && (
-              <span className="font-['Fira_Code',sans-serif] text-[10px] text-[#90a1b9] px-1.5 py-0.5">
+              <span className="font-['Fira_Code',sans-serif] text-[10px] text-[#aeb9d0] px-1.5 py-0.5">
                 +{project.technologies.length - 4}
               </span>
             )}
           </div>
           <button
             onClick={() => onSelect(project)}
-            className="bg-[#1d293d] border border-[#90a1b9] hover:border-[#f8fafc] transition-colors px-4 py-2 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-[13px] cursor-pointer focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
+            className="bg-[#06000a] border border-[#aeb9d0] hover:border-[#f8fafc] transition-colors px-4 py-2 rounded-lg font-['Fira_Code',sans-serif] text-[#f8fafc] text-[13px] cursor-pointer focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-2"
           >
             ver-detalhes
           </button>

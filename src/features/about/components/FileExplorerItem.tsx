@@ -12,7 +12,7 @@ export function FileItem({ label, iconColor, isActive, onClick }: FileItemProps)
     <button
       onClick={onClick}
       className={`flex items-center gap-2 py-1.5 px-2 w-full text-left rounded transition-colors font-['Fira_Code',sans-serif] text-sm ${
-        isActive ? 'bg-[#1d293d] text-[#f8fafc]' : 'text-[#90a1b9] hover:text-[#f8fafc]'
+        isActive ? 'bg-[#2c143b] text-[#f8fafc]' : 'text-[#aeb9d0] hover:text-[#f8fafc]'
       }`}
     >
       <File size={14} style={{ color: iconColor }} />
@@ -32,7 +32,7 @@ interface FolderItemProps {
 export function FolderItem({ label, iconColor, isExpanded, onClick, isRoot }: FolderItemProps) {
   const textClass = isRoot
     ? 'text-[#f8fafc] hover:text-[#43D9AD]'
-    : 'text-[#90a1b9] hover:text-[#f8fafc]';
+    : 'text-[#aeb9d0] hover:text-[#f8fafc]';
 
   return (
     <button

@@ -6,7 +6,7 @@ const ORDER: FoodType[] = ['function', 'class', 'async'];
 
 export const FoodLegend = memo(function FoodLegend() {
   return (
-    <div className="w-full font-['Fira_Code',sans-serif] text-[10px] text-[#90a1b9] space-y-0.5">
+    <div className="w-full font-['Fira_Code',sans-serif] text-[10px] text-[#aeb9d0] space-y-0.5">
       <p className="text-[#f8fafc] text-[11px]">// comidas</p>
       {ORDER.map((type) => {
         const { points, color, label } = FOOD_TYPES[type];

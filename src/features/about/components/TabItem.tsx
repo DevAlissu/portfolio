@@ -24,7 +24,7 @@ export function TabItem({ tab, isActive, canClose, onSelect, onClose }: TabItemP
         }
       }}
       className={`group relative flex items-center gap-2 px-4 py-3 border-r border-[#314158] cursor-pointer shrink-0 transition-colors focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-[-2px] ${
-        isActive ? 'text-[#f8fafc]' : 'text-[#90a1b9] hover:text-[#f8fafc]'
+        isActive ? 'text-[#f8fafc]' : 'text-[#aeb9d0] hover:text-[#f8fafc]'
       }`}
     >
       {isActive && (

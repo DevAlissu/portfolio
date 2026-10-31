@@ -90,14 +90,14 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             <button
               onClick={() => setExpanded((p) => !p)}
               aria-label={expanded ? 'Reduzir modal' : 'Expandir modal'}
-              className="hidden sm:flex text-[#90a1b9] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d] focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
+              className="hidden sm:flex text-[#aeb9d0] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d] focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
             >
               {expanded ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
             </button>
             <button
               onClick={onClose}
               aria-label="Fechar modal"
-              className="text-[#90a1b9] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d] focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
+              className="text-[#aeb9d0] hover:text-[#f8fafc] transition-colors p-1.5 rounded hover:bg-[#1d293d] focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
             >
               <X size={18} />
             </button>
@@ -113,7 +113,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <button
                 type="button"
                 aria-label="Ampliar imagem"
-                className="rounded-md overflow-hidden bg-[#1d293d] group/img relative w-full focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
+                className="rounded-md overflow-hidden bg-[#06000a] group/img relative w-full focus-visible:outline-2 focus-visible:outline-[#ffb86a]"
                 onClick={() => setLightboxOpen(true)}
               >
                 <img
@@ -157,7 +157,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               )}
             </div>
           ) : (
-            <div className="h-[140px] sm:h-[180px] bg-[#1d293d] rounded-md flex items-center justify-center">
+            <div className="h-[140px] sm:h-[180px] bg-[#06000a] rounded-md flex items-center justify-center">
               <p className="font-['Fira_Code',sans-serif] text-[#314158] text-sm">
                 // sem imagens ainda por enquanto
               </p>
@@ -170,7 +170,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           </p>
 
           {/* Description */}
-          <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-sm leading-relaxed whitespace-pre-line">
+          <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-sm leading-relaxed whitespace-pre-line">
             {project.details || project.description}
           </p>
 
@@ -199,7 +199,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 href={project.repoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 px-4 py-2.5 rounded-lg font-['Fira_Code',sans-serif] text-sm border border-[#90a1b9] text-[#f8fafc] hover:border-[#f8fafc] transition-colors"
+                className="flex items-center gap-2 px-4 py-2.5 rounded-lg font-['Fira_Code',sans-serif] text-sm border border-[#aeb9d0] text-[#f8fafc] hover:border-[#f8fafc] transition-colors"
               >
                 <Github size={16} />
                 repositorio
