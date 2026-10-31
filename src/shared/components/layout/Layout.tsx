@@ -2,10 +2,13 @@ import { Suspense, useEffect, useRef } from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { ShaderBackground } from '../decorative/ShaderBackground';
 import { CodeRain } from '../decorative/CodeRain';
+import { useSettingsStore } from '../../store/useSettingsStore';
 
 export function Layout() {
   const location = useLocation();
+  const background = useSettingsStore((s) => s.background);
   const mainRef = useRef<HTMLElement>(null);
   const isFirstRender = useRef(true);
 
@@ -19,15 +22,11 @@ export function Layout() {
   }, [location.pathname]);
 
   return (
-    <div className="h-dvh flex flex-col bg-[#020618] relative overflow-hidden">
-      <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden hidden lg:block z-0">
-        <CodeRain />
-      </div>
-
-      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute top-[20%] right-[15%] w-[600px] h-[600px] bg-[#9d4edd] rounded-full blur-[200px] opacity-30" />
-        <div className="absolute bottom-[20%] left-[10%] w-[500px] h-[500px] bg-[#7b2cbf] rounded-full blur-[180px] opacity-25" />
-        <div className="absolute top-[50%] left-[50%] w-[400px] h-[400px] bg-[#5a189a] rounded-full blur-[150px] opacity-20" />
+    <div className="h-dvh flex flex-col bg-[#06000a] relative overflow-hidden">
+      <div aria-hidden="true" className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {background === 'waves' && <ShaderBackground variant="waves" />}
+        {background === 'dust' && <ShaderBackground variant="dust" />}
+        {background === 'matrix' && <CodeRain />}
       </div>
 
       <div className="relative z-10 flex flex-col h-full min-h-0">
@@ -51,7 +50,7 @@ export function Layout() {
 function PageFallback() {
   return (
     <div className="h-full flex items-center justify-center" role="status" aria-live="polite">
-      <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-base animate-pulse">
+      <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-base animate-pulse">
         // carregando...
       </p>
     </div>

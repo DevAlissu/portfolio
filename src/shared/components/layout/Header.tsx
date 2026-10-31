@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { NAV_ITEMS, CONTACT_NAV } from '../../constants/navigation';
+import { SettingsMenu } from './SettingsMenu';
 
 export function Header() {
   const location = useLocation();
@@ -10,12 +11,12 @@ export function Header() {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <header className="border-b border-[#314158] bg-[#020618] shrink-0">
+    <header className="border-b border-[#314158] bg-[#06000a] shrink-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center min-w-0">
           <div className="px-3 lg:px-6 py-4 border-r border-[#314158]">
             <Link to="/">
-              <p className="font-['Fira_Code',sans-serif] font-[450] text-[#90a1b9] text-base whitespace-nowrap">
+              <p className="font-['Fira_Code',sans-serif] font-[450] text-[#aeb9d0] text-base whitespace-nowrap">
                 DevAlissu
               </p>
             </Link>
@@ -29,7 +30,7 @@ export function Header() {
                 className={`relative px-3 lg:px-6 xl:px-8 py-4 border-r border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-xs lg:text-sm xl:text-base transition-colors whitespace-nowrap ${
                   isActive(item.path)
                     ? 'text-[#f8fafc]'
-                    : 'text-[#90a1b9] hover:text-[#f8fafc]'
+                    : 'text-[#aeb9d0] hover:text-[#f8fafc]'
                 }`}
               >
                 {isActive(item.path) && (
@@ -41,13 +42,13 @@ export function Header() {
           </nav>
         </div>
 
-        <div className="hidden md:flex items-center shrink-0">
+        <div className="flex items-center shrink-0">
           <Link
             to={CONTACT_NAV.path}
-            className={`relative px-3 lg:px-6 xl:px-8 py-4 border-l border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-xs lg:text-sm xl:text-base transition-colors whitespace-nowrap ${
+            className={`relative hidden md:flex px-3 lg:px-6 xl:px-8 py-4 border-l border-[#314158] font-['Fira_Code',sans-serif] font-[450] text-xs lg:text-sm xl:text-base transition-colors whitespace-nowrap ${
               isActive(CONTACT_NAV.path)
                 ? 'text-[#f8fafc]'
-                : 'text-[#90a1b9] hover:text-[#f8fafc]'
+                : 'text-[#aeb9d0] hover:text-[#f8fafc]'
             }`}
           >
             {isActive(CONTACT_NAV.path) && (
@@ -55,22 +56,24 @@ export function Header() {
             )}
             {CONTACT_NAV.label}
           </Link>
-        </div>
 
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label={mobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-          aria-expanded={mobileMenuOpen}
-          className="md:hidden px-6 py-4 border-l border-[#314158] text-[#90a1b9] focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-[-2px]"
-        >
-          {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-        </button>
+          <SettingsMenu />
+
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label={mobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={mobileMenuOpen}
+            className="md:hidden px-4 py-4 border-l border-[#314158] text-[#aeb9d0] focus-visible:outline-2 focus-visible:outline-[#ffb86a] focus-visible:outline-offset-[-2px]"
+          >
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       {mobileMenuOpen && (
         <nav className="md:hidden border-t border-[#314158] bg-[#0a1628]">
           <div className="p-6 space-y-1">
-            <p className="font-['Fira_Code',sans-serif] text-[#90a1b9] text-sm mb-4">
+            <p className="font-['Fira_Code',sans-serif] text-[#aeb9d0] text-sm mb-4">
               # navegar:
             </p>
             {[...NAV_ITEMS, { path: '/contato' as const, label: '_contato' as const }].map(
@@ -82,7 +85,7 @@ export function Header() {
                   className={`block py-3 font-['Fira_Code',sans-serif] font-[450] text-base transition-colors ${
                     isActive(item.path)
                       ? 'text-[#f8fafc]'
-                      : 'text-[#90a1b9] hover:text-[#f8fafc]'
+                      : 'text-[#aeb9d0] hover:text-[#f8fafc]'
                   }`}
                 >
                   {item.label}
